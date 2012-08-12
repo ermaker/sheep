@@ -14,14 +14,14 @@ describe Sheep do
     it 'reads map with 2.map' do
       map = path('2.map')
       subject.load map
-      subject.objects.should == [[[1.0,1.0],[1.0,2.0],[2.0,2.0],[2.0,1.0]]]
+      subject.objects.should == [[[1.0,1.0],[2.0,1.0],[2.0,2.0],[1.0,2.0]]]
     end
     it 'reads map with 3.map' do
       map = path('3.map')
       subject.load map
       subject.objects.should == [
-        [[1.0,1.0],[1.0,2.0],[2.0,2.0],[2.0,1.0]],
-        [[3.0,3.0],[3.0,4.0],[4.0,4.0],[4.0,3.0]],
+        [[1.0,1.0],[2.0,1.0],[2.0,2.0],[1.0,2.0]],
+        [[3.0,3.0],[4.0,3.0],[4.0,4.0],[3.0,4.0]],
       ]
     end
     it 'raises an error with _1.map' do
