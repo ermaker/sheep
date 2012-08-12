@@ -4,6 +4,10 @@ def path filename
   File.join(File.dirname(__FILE__), 'fixtures', filename)
 end
 
+def tmp filename
+  File.join(File.dirname(__FILE__), '..', '..', 'tmp', filename)
+end
+
 describe Sheep do
   context '#load' do
     it 'reads map with 1.map' do
@@ -35,6 +39,19 @@ describe Sheep do
       map = path('_2.map')
       subject.load map
       end.to raise_error Sheep::NUMBEROF_POINTS_NOT_MATCHED
+    end
+  end
+
+  context '#capture' do
+    it 'works' do
+      objects = [
+        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
+        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
+        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
+      ]
+      subject.instance_eval('@objects = objects')
+      subject.objects.should == objects
+      subject.capture tmp('capture.jpg')
     end
   end
 end

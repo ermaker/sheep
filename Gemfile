@@ -1,5 +1,7 @@
 source :rubygems
 
+gem 'rmagick'
+
 group :test, :development do
   gem 'guard'
   gem 'guard-bundler'

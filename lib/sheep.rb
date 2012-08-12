@@ -1,3 +1,5 @@
+require 'RMagick'
+
 class Sheep
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
   class NUMBEROF_POINTS_NOT_MATCHED < Exception; end
@@ -18,5 +20,27 @@ class Sheep
       raise NUMBEROF_OBJECTS_NOT_MATCHED unless
         numberof_objects == @objects.size
     end
+  end
+
+  def capture filename
+    scale = 100
+    margin = 100
+
+    points = @objects.flatten(1)
+    minmax = points[0].zip(*points).map{|v|v.minmax}
+    size = minmax.map{|v| v[1]}
+
+    canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
+    gc = Magick::Draw.new
+    gc.stroke('#001aff')
+    gc.stroke_width(scale/50)
+    gc.fill('transparent')
+
+    @objects.each do |object|
+      gc.polygon(*object.flatten.map{|v|v*scale})
+    end
+
+    gc.draw(canvas)
+    canvas.write(filename)
   end
 end
