@@ -50,7 +50,6 @@ describe Sheep do
         [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
       ]
       subject.instance_eval('@objects = objects')
-      subject.objects.should == objects
       subject.capture tmp('capture.jpg')
     end
   end
