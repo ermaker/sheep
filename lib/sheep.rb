@@ -11,10 +11,12 @@ class Sheep
         numberof_points, *points = line.split
         numberof_points = numberof_points.to_i
         points = points.map(&:to_f).each_slice(2).to_a
-        raise NUMBEROF_POINTS_NOT_MATCHED unless numberof_points == points.size
+        raise NUMBEROF_POINTS_NOT_MATCHED unless
+          numberof_points == points.size
         points
       end
-      raise NUMBEROF_OBJECTS_NOT_MATCHED unless numberof_objects == @objects.size
+      raise NUMBEROF_OBJECTS_NOT_MATCHED unless
+        numberof_objects == @objects.size
     end
   end
 end
