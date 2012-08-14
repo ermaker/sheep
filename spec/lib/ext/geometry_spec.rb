@@ -22,13 +22,16 @@ describe Geometry::Polygon do
     subject
   end
 
-  context '#contains?' do
+  context '#inside?' do
     it 'works' do
-      subject.should be_contain(Point(0.5, 0.5))
-      subject.should be_contain(Point(0.0, 0.0))
-      subject.should be_contain(Point(1.0, 1.0))
+      subject.should be_inside(Point(0.5, 0.5))
+      subject.should be_inside(Point(0.9, 0.9))
+      subject.should be_inside(Point(0.1, 0.9))
+      subject.should be_inside(Point(0.9, 0.1))
 
-      subject.should_not be_contain(Point(1.1, 0.5))
+      subject.should_not be_inside(Point(0.0, 0.0))
+      subject.should_not be_inside(Point(1.0, 1.0))
+      subject.should_not be_inside(Point(1.1, 0.5))
     end
   end
 
