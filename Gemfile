@@ -1,6 +1,7 @@
 source :rubygems
 
 gem 'rmagick'
+gem 'ruby-geometry', require: 'geometry'
 
 group :test, :development do
   gem 'guard'
