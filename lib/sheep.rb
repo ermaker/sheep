@@ -1,6 +1,28 @@
 require 'RMagick'
 
 class Sheep
+  class INVALID_FORMAT < Exception; end
+
+  def convert source, destination
+    File.open(source) do |input|
+      File.open(destination, 'w') do |output|
+        raise INVALID_FORMAT unless input.readline =~ /^dimension=2$/
+        raise INVALID_FORMAT unless input.readline =~ /^numPolygons=(\d+)$/
+        output.puts $1.to_i
+        begin
+          loop do
+            raise INVALID_FORMAT unless input.readline =~ /^numVertices=(\d+)$/
+            output.print "#{$1.to_i} "
+            output.puts((1..$1.to_i).map do |idx|
+              input.readline.split.map(&:to_f)
+            end.flatten.join(' '))
+          end
+        rescue EOFError
+        end
+      end
+    end
+  end
+
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
   class NUMBEROF_POINTS_NOT_MATCHED < Exception; end
 
