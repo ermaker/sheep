@@ -1,4 +1,5 @@
 require 'RMagick'
+require 'progressbar'
 
 class Sheep
   class INVALID_FORMAT < Exception; end
@@ -58,9 +59,12 @@ class Sheep
     gc.stroke_width(scale/5000)
     gc.fill('transparent')
 
+    pbar = ProgressBar.new('Draw objects', @objects.size)
     @objects.each do |object|
       gc.polygon(*object.flatten.map{|v|v*scale})
+      pbar.inc
     end
+    pbar.finish
 
     gc.draw(canvas)
     canvas.write(filename)

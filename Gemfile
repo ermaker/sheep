@@ -2,6 +2,7 @@ source :rubygems
 
 gem 'rmagick'
 gem 'ruby-geometry', require: 'geometry'
+gem 'ruby-progressbar', require: 'progressbar'
 
 group :test, :development do
   gem 'guard'
