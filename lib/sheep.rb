@@ -45,11 +45,11 @@ class Sheep
   end
 
   def capture filename
-    scale = 100
-    margin = 100
+    scale = 5000
+    margin = 2000
 
     points = @objects.flatten(1)
-    minmax = points[0].zip(*points).map{|v|v.minmax}
+    minmax = [points.map{|v|v[0]}.minmax, points.map{|v|v[1]}.minmax]
     size = minmax.map{|v| v[1]}
 
     canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
