@@ -45,8 +45,8 @@ class Sheep
   end
 
   def capture filename
-    scale = 5000
-    margin = 2000
+    scale = 10000
+    margin = 200
 
     points = @objects.flatten(1)
     minmax = [points.map{|v|v[0]}.minmax, points.map{|v|v[1]}.minmax]
@@ -55,7 +55,7 @@ class Sheep
     canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
     gc = Magick::Draw.new
     gc.stroke('#001aff')
-    gc.stroke_width(scale/50)
+    gc.stroke_width(scale/5000)
     gc.fill('transparent')
 
     @objects.each do |object|
