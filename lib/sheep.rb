@@ -12,10 +12,10 @@ class Sheep
         begin
           loop do
             raise INVALID_FORMAT unless input.readline =~ /^numVertices=(\d+)$/
-            output.print "#{$1.to_i} "
+            output.print "#{$1.to_i-1} "
             output.puts((1..$1.to_i).map do |idx|
               input.readline.split.map(&:to_f)
-            end.flatten.join(' '))
+            end[0..-2].flatten.join(' '))
           end
         rescue EOFError
         end
