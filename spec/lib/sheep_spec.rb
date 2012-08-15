@@ -13,7 +13,7 @@ describe Sheep do
   context '#convert' do
     it 'works' do
       result = StringIO.new
-      File.stub(:open).with(fixture('3.data')).and_yield(
+      File.stub(:open).with(fixture('3.data'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3.data'))))
       File.stub(:open).with(tmp('3.map'), 'w').and_yield(result)
       subject.convert fixture('3.data'), tmp('3.map')

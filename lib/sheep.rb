@@ -4,7 +4,7 @@ class Sheep
   class INVALID_FORMAT < Exception; end
 
   def convert source, destination
-    File.open(source) do |input|
+    File.open(source, 'rt') do |input|
       File.open(destination, 'w') do |output|
         raise INVALID_FORMAT unless input.readline =~ /^dimension=2$/
         raise INVALID_FORMAT unless input.readline =~ /^numPolygons=(\d+)$/
