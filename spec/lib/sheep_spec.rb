@@ -16,7 +16,7 @@ describe Sheep do
       File.stub(:open).with(fixture('3.data'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3.data'))))
       File.stub(:open).with(tmp('3.map'), 'w').and_yield(result)
-      subject.convert fixture('3.data'), tmp('3.map')
+      subject.convert fixture('3.data'), tmp('3.map'), StringIO.new
       result.string.should == File.read(fixture('3.map'))
     end
   end
