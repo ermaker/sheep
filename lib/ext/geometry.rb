@@ -7,8 +7,15 @@ module Geometry
     def intersects_with? segment
       edges.any? {|edge| edge.intersects_with? segment}
     end
-    def counting? point
-      inside? point
+    def counting? point_or_segment
+      case point_or_segment
+      when Point
+        inside? point_or_segment
+      when Segment
+        intersects_with? point_or_segment
+      else
+        raise
+      end
     end
   end
 end

@@ -66,5 +66,24 @@ describe Geometry::Polygon do
       subject.should_not be_counting(Point(1.0, 1.0))
       subject.should_not be_counting(Point(1.1, 0.5))
     end
+
+    it 'works with segments' do
+      subject.should be_counting(
+        Segment(Point(-1.0,-1.0),Point(0.5,0.5)))
+      subject.should be_counting(
+        Segment(Point(-1.0,-1.0),Point(2.0,2.0)))
+
+      subject.should_not be_counting(
+        Segment(Point(-1.0,-1.0),Point(-1.0,2.0)))
+    end
+
+    it 'will work with segments' do
+      pending
+      subject.should be_counting(
+        Segment(Point(0.3,0.3),Point(0.7,0.7)))
+
+      subject.should_not be_intersects_with(
+        Segment(Point(1.0,-1.0),Point(-1.0,1.0)))
+    end
   end
 end
