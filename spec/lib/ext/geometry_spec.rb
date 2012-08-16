@@ -54,4 +54,17 @@ describe Geometry::Polygon do
         Segment(Point(1.0,-1.0),Point(-1.0,1.0)))
     end
   end
+
+  context '#counting?' do
+    it 'works with points' do
+      subject.should be_counting(Point(0.5, 0.5))
+      subject.should be_counting(Point(0.9, 0.9))
+      subject.should be_counting(Point(0.1, 0.9))
+      subject.should be_counting(Point(0.9, 0.1))
+
+      subject.should_not be_counting(Point(0.0, 0.0))
+      subject.should_not be_counting(Point(1.0, 1.0))
+      subject.should_not be_counting(Point(1.1, 0.5))
+    end
+  end
 end
