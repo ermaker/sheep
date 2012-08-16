@@ -85,5 +85,47 @@ describe Geometry::Polygon do
       subject.should_not be_intersects_with(
         Segment(Point(1.0,-1.0),Point(-1.0,1.0)))
     end
+
+    it 'works with cells' do
+      subject.should be_counting(
+        Polygon [
+          Point(0.5, 0.5),
+          Point(1.5, 0.5),
+          Point(1.5, 1.5),
+          Point(0.5, 1.5),
+      ])
+
+      subject.should be_counting(
+        Polygon [
+          Point(0.3, 0.3),
+          Point(0.7, 0.3),
+          Point(0.7, 0.7),
+          Point(0.3, 0.7),
+      ])
+
+      subject.should be_counting(
+        Polygon [
+          Point(-0.5, -0.5),
+          Point(1.5, -0.5),
+          Point(1.5, 1.5),
+          Point(-0.5, 1.5),
+      ])
+
+      subject.should_not be_counting(
+        Polygon [
+          Point(1.0, 0.0),
+          Point(2.0, 0.0),
+          Point(2.0, 1.0),
+          Point(1.0, 1.0),
+      ])
+
+      subject.should_not be_counting(
+        Polygon [
+          Point(1.0, 1.0),
+          Point(2.0, 1.0),
+          Point(2.0, 2.0),
+          Point(1.0, 2.0),
+      ])
+    end
   end
 end
