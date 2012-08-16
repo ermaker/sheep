@@ -65,4 +65,9 @@ describe Sheep do
       subject.capture tmp('capture.jpg')
     end
   end
+
+  context '#euler_histogram' do
+    it 'works' do
+    end
+  end
 end

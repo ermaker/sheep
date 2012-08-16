@@ -46,6 +46,9 @@ describe Geometry::Polygon do
       subject.should_not be_intersects_with(
         Segment(Point(-1.0,-1.0),Point(-1.0,2.0)))
 
+    end
+
+    it 'will work' do
       pending
       subject.should_not be_intersects_with(
         Segment(Point(1.0,-1.0),Point(-1.0,1.0)))
