@@ -7,7 +7,11 @@ module Geometry
       point_in_polygon.inside?
     end
     def intersects_with? segment
-      edges.any? {|edge| edge.intersects_with? segment} or
+      edges.any? do |edge|
+        edge.intersects_with?(segment) and
+        not [edge.point1, edge.point2].any?{|p| segment.contains_point?(p)} and
+        not [segment.point1, segment.point2].any?{|p| edge.contains_point?(p)}
+      end or
       [segment.point1, segment.point2, Point(
         (segment.point1.x+segment.point2.x)/2,
         (segment.point1.y+segment.point2.y)/2)

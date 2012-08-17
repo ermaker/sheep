@@ -9,6 +9,29 @@ describe Geometry::Point do
   end
 end
 
+describe Geometry::Segment do
+  subject do
+    Segment(Point(0.0, 0.0), Point(1.0, 0.0))
+  end
+
+  it 'works' do
+    segment = Segment(Point(0.0, 0.0), Point(0.0, 1.0))
+    segment2 = Segment(Point(0.5, -0.5), Point(0.5, 0.5))
+
+    (subject.intersects_with?(subject) and
+     not [subject.point1, subject.point2].any?{|p| subject.contains_point?(p)} and
+     not [subject.point1, subject.point2].any?{|p| subject.contains_point?(p)}).should be_false
+
+    (subject.intersects_with?(segment) and
+     not [subject.point1, subject.point2].any?{|p| segment.contains_point?(p)} and
+     not [segment.point1, segment.point2].any?{|p| subject.contains_point?(p)}).should be_false
+
+    (subject.intersects_with?(segment2) and
+     not [subject.point1, subject.point2].any?{|p| segment2.contains_point?(p)} and
+     not [segment2.point1, segment2.point2].any?{|p| subject.contains_point?(p)}).should be_true
+  end
+end
+
 describe Geometry::Polygon do
   subject do
     Polygon [
@@ -31,6 +54,7 @@ describe Geometry::Polygon do
 
       subject.should_not be_inside(Point(0.0, 0.0))
       subject.should_not be_inside(Point(1.0, 1.0))
+      subject.should_not be_inside(Point(0.5, 0.0))
       subject.should_not be_inside(Point(1.1, 0.5))
     end
   end
@@ -48,10 +72,9 @@ describe Geometry::Polygon do
       subject.should_not be_intersects_with(
         Segment(Point(-1.0,-1.0),Point(-1.0,2.0)))
 
-    end
+      subject.should_not be_intersects_with(
+        Segment(Point(0.0,0.0),Point(1.0,0.0)))
 
-    it 'will work' do
-      pending
       subject.should_not be_intersects_with(
         Segment(Point(1.0,-1.0),Point(-1.0,1.0)))
     end
@@ -77,10 +100,12 @@ describe Geometry::Polygon do
 
       subject.should_not be_counting(
         Segment(Point(-1.0,-1.0),Point(-1.0,2.0)))
+
+      subject.should_not be_counting(
+        Segment(Point(0.0,0.0),Point(1.0,0.0)))
     end
 
     it 'will work with segments' do
-      pending
       subject.should be_counting(
         Segment(Point(0.3,0.3),Point(0.7,0.7)))
 
