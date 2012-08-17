@@ -42,6 +42,8 @@ describe Geometry::Polygon do
       subject.should be_intersects_with(
         Segment(Point(-1.0,-1.0),Point(2.0,2.0)))
 
+      subject.should be_intersects_with(
+        Segment(Point(0.3,0.3),Point(0.7,0.7)))
 
       subject.should_not be_intersects_with(
         Segment(Point(-1.0,-1.0),Point(-1.0,2.0)))

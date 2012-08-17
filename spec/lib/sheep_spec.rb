@@ -131,7 +131,6 @@ describe Sheep do
         [2, -2, 2],
       ]
 
-      pending
       result = subject.euler_histogram objects, 0.0, 0.0, 6.0, 8.0, 3, 2
       result.should == [
         [1, -1, 2],
