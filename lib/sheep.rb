@@ -78,10 +78,38 @@ class Sheep
   def euler_histogram_step objs, minx, miny, maxx, maxy, stepx, stepy,
     idxx, idxy
     if idxx.odd? and idxy.odd?
-      objs.count do |obj|
+      return objs.count do |obj|
         Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
           Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
                 miny + ((idxx+1)/2)*(maxy-miny)/stepy))
+      end
+    end
+
+    if idxx.even? and idxy.even?
+      return
+    end
+
+    if idxx.even? and idxy.odd?
+      return -objs.count do |obj|
+        Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+          Segment(
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepy),
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
+                  miny + ((idxx+1)/2+1)*(maxy-miny)/stepy)
+        ))
+      end
+    end
+
+    if idxx.odd? and idxy.even?
+      return -objs.count do |obj|
+        Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+          Segment(
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepy),
+            Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepx,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepy)
+        ))
       end
     end
   end
