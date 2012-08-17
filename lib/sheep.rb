@@ -127,5 +127,10 @@ class Sheep
   end
 
   def euler_histogram objs, minx, miny, maxx, maxy, stepx, stepy
+    (0..stepx*2-2).map do |idxx|
+      (0..stepy*2-2).map do |idxy|
+        euler_histogram_step(objs,minx,miny,maxx,maxy,stepx,stepy,idxx,idxy)
+      end
+    end
   end
 end

@@ -119,7 +119,6 @@ describe Sheep do
 
   context '#euler_histogram' do
     it 'works' do
-      pending
       objects = [
         [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
         [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
@@ -130,6 +129,26 @@ describe Sheep do
         [1, -1, 2],
         [-1, 1, -1],
         [2, -2, 2],
+      ]
+
+      pending
+      result = subject.euler_histogram objects, 0.0, 0.0, 6.0, 8.0, 3, 2
+      result.should == [
+        [1, -1, 2],
+        [-1, 1, -2],
+        [2, -2, 3],
+        [-2, 2, -2],
+        [2, -2, 2],
+      ]
+
+      pending
+      result = subject.euler_histogram objects, 0.0, 0.0, 6.0, 8.0, 3, 3
+      result.should == [
+        [0, 0, 1, 0, 1],
+        [0, 0, -1, 0, 0],
+        [1, 0, 1, 0, 1],
+        [-1, 1, -2, 1 ,-1],
+        [1, -1, 2, -1, 1],
       ]
     end
   end
