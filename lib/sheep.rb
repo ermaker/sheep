@@ -80,23 +80,35 @@ class Sheep
     if idxx.odd? and idxy.odd?
       return objs.count do |obj|
         Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
-          Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
-                miny + ((idxx+1)/2)*(maxy-miny)/stepy))
+          Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                miny + ((idxx+1)/2)*(maxy-miny)/stepx))
       end
     end
 
     if idxx.even? and idxy.even?
-      return
+      return objs.count do |obj|
+        Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+          Polygon [
+          Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+          Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepy,
+                miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+          Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepy,
+                miny + ((idxx+1)/2+1)*(maxy-miny)/stepx),
+          Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                miny + ((idxx+1)/2+1)*(maxy-miny)/stepx),
+        ])
+      end
     end
 
     if idxx.even? and idxy.odd?
       return -objs.count do |obj|
         Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
           Segment(
-            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
-                  miny + ((idxx+1)/2)*(maxy-miny)/stepy),
-            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
-                  miny + ((idxx+1)/2+1)*(maxy-miny)/stepy)
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2+1)*(maxy-miny)/stepx)
         ))
       end
     end
@@ -105,10 +117,10 @@ class Sheep
       return -objs.count do |obj|
         Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
           Segment(
-            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
-                  miny + ((idxx+1)/2)*(maxy-miny)/stepy),
-            Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepx,
-                  miny + ((idxx+1)/2)*(maxy-miny)/stepy)
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+            Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepx)
         ))
       end
     end
