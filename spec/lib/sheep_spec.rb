@@ -66,6 +66,19 @@ describe Sheep do
     end
   end
 
+  context '#euler_histogram_step' do
+    it 'works if the target is a point' do
+      objects = [
+        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
+        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
+        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
+      ]
+      result = subject.euler_histogram_step(
+        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 1, 1)
+      result.should == 1
+    end
+  end
+
   context '#euler_histogram' do
     it 'works' do
       pending

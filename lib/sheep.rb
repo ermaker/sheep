@@ -1,5 +1,7 @@
 require 'RMagick'
 require 'progressbar'
+require 'geometry'
+require 'ext/geometry'
 
 class Sheep
   class INVALID_FORMAT < Exception; end
@@ -71,5 +73,19 @@ class Sheep
 
     gc.draw(canvas)
     canvas.write(filename)
+  end
+
+  def euler_histogram_step objs, minx, miny, maxx, maxy, stepx, stepy,
+    idxx, idxy
+    if idxx.odd? and idxy.odd?
+      objs.count do |obj|
+        Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+          Point(minx + ((idxy+1)/2)*(maxx-minx)/stepx,
+                miny + ((idxx+1)/2)*(maxy-miny)/stepy))
+      end
+    end
+  end
+
+  def euler_histogram objs, minx, miny, maxx, maxy, stepx, stepy
   end
 end
