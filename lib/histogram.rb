@@ -39,7 +39,7 @@ class Histogram
   end
 
   def exact_query minx, miny, maxx, maxy
-    data[minx*2..(maxx-1)*2].
+    (data[minx*2..(maxx-1)*2]||[]).
       map{|line|line[miny*2..(maxy-1)*2].inject(:+) || 0}.inject(:+) || 0
   end
 
@@ -51,7 +51,12 @@ class Histogram
 
   def query qminx, qminy, qmaxx, qmaxy
     lidx, uidx, lbound, ubound = bounds(qminx, qminy, qmaxx, qmaxy)
-    lower = exact_query(lidx)
-    upper = exact_query(uidx)
+    lower = exact_query(*lidx)
+    upper = exact_query(*uidx)
+    l_a = area(*lbound)
+    u_a = area(*ubound)
+    q_a = area(qminx, qminy, qmaxx, qmaxy)
+    return exact_query(*uidx) if lidx == uidx
+    return (q_a-l_a)/(u_a-l_a)*(upper-lower) + lower
   end
 end
