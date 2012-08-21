@@ -62,6 +62,16 @@ describe Histogram do
       subject.exact_query(1, 0, 2, 2).should == 2
       subject.exact_query(1, 1, 2, 2).should == 2
     end
+
+  context '#area' do
+    it 'works' do
+      subject.area(0.0, 0.0, 6.0, 8.0).should == 48.0
+      subject.area(4.0, 2.0, 5.0, 3.0).should == 1.0
+      subject.area(3.0, 5.0, 4.0, 6.0).should == 1.0
+      subject.area(3.0, 4.0, 5.0, 6.0).should == 4.0
+      subject.area(4.0, 4.0, 5.0, 5.0).should == 1.0
+      subject.area(3.0, 2.0, 5.0, 6.0).should == 8.0
+    end
   end
 
   context '#query' do

@@ -43,6 +43,10 @@ class Histogram
       map{|line|line[miny*2..(maxy-1)*2].inject(:+)}.inject(:+)
   end
 
+  def area minx_, miny_, maxx_, maxy_
+    (maxx_ - minx_) * (maxy_ - miny_)
+  end
+
   def query qminx, qminy, qmaxx, qmaxy
     lbound, ubound = bounds(qminx, qminy, qmaxx, qmaxy)
   end
