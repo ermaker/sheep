@@ -1,4 +1,4 @@
-require 'histogram'
+require 'algorithms/histogram'
 
 describe Histogram do
   subject do
