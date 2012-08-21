@@ -37,7 +37,7 @@ describe Sheep do
 
   context '#capture', :if => false do
     it 'works' do
-      subjects.objects = [
+      subject.objects = [
         [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
         [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
         [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
