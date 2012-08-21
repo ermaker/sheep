@@ -32,4 +32,13 @@ class Histogram
 
     return [[lminx, lminy, lmaxx, lmaxy], [uminx, uminy, umaxx, umaxy]]
   end
+
+  def exact_query minx, miny, maxx, maxy
+    data[minx*2..(maxx-1)*2].
+      map{|line|line[miny*2..(maxy-1)*2].inject(:+)}.inject(:+)
+  end
+
+  def query qminx, qminy, qmaxx, qmaxy
+    lbound, ubound = bounds(qminx, qminy, qmaxx, qmaxy)
+  end
 end
