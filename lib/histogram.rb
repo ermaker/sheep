@@ -13,24 +13,29 @@ class Histogram
 
   def bounds qminx, qminy, qmaxx, qmaxy
     lminx = (miny..maxy).
-      step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qminy}.min[1]
+      step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qminy}.min
     lminy = (minx..maxx).
-      step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qminx}.min[1]
+      step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qminx}.min
     lmaxx = (miny..maxy).
-      step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qmaxy}.max[1]
+      step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qmaxy}.max
     lmaxy = (minx..maxx).
-      step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qmaxx}.max[1]
+      step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qmaxx}.max
 
     uminx = (miny..maxy).
-      step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qminy}.max[1]
+      step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qminy}.max
     uminy = (minx..maxx).
-      step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qminx}.max[1]
+      step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qminx}.max
     umaxx = (miny..maxy).
-      step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qmaxy}.min[1]
+      step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qmaxy}.min
     umaxy = (minx..maxx).
-      step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qmaxx}.min[1]
+      step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qmaxx}.min
 
-    return [[lminx, lminy, lmaxx, lmaxy], [uminx, uminy, umaxx, umaxy]]
+    return [
+      [lminx, lminy, lmaxx, lmaxy].map{|v|v[1]},
+      [uminx, uminy, umaxx, umaxy].map{|v|v[1]},
+      [lminx, lminy, lmaxx, lmaxy].map{|v|v[0]},
+      [uminx, uminy, umaxx, umaxy].map{|v|v[0]},
+    ]
   end
 
   def exact_query minx, miny, maxx, maxy
