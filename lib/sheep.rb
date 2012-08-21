@@ -133,17 +133,4 @@ class Sheep
       end
     end
   end
-
-  def query minx, miny, maxx, maxy
-    query_area = Polygon [
-      Point(minx, miny),
-      Point(maxx, miny),
-      Point(maxx, maxy),
-      Point(minx, maxy),
-    ]
-    @objects.count do |obj|
-      Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).
-      counting?(query_area)
-    end
-  end
 end
