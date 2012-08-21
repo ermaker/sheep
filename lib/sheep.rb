@@ -32,7 +32,7 @@ class Sheep
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
   class NUMBEROF_POINTS_NOT_MATCHED < Exception; end
 
-  attr_reader :objects
+  attr_accessor :objects
 
   def load filename
     open(filename) do |file|

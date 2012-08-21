@@ -56,12 +56,11 @@ describe Sheep do
 
   context '#capture', :if => false do
     it 'works' do
-      objects = [
+      subjects.objects = [
         [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
         [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
         [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
       ]
-      subject.instance_eval('@objects = objects')
       subject.capture tmp('capture.jpg')
     end
   end
@@ -153,12 +152,11 @@ describe Sheep do
 
   context '#query' do
     it 'works' do
-      objects = [
+      subject.objects = [
         [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
         [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
         [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
       ]
-      subject.instance_eval('@objects = objects')
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
       subject.query(4.0, 2.0, 5.0, 3.0).should == 1
       subject.query(3.0, 5.0, 4.0, 6.0).should == 2
