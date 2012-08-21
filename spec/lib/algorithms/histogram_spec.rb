@@ -1,8 +1,8 @@
 require 'algorithms/histogram'
 
-describe Histogram do
+describe Algorithms::Histogram do
   subject do
-    Histogram.new [
+    described_class.new [
       [1, -1, 2],
       [-1, 1, -1],
       [2, -2, 2],
