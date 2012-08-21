@@ -44,6 +44,8 @@ class Histogram
   end
 
   def area minx_, miny_, maxx_, maxy_
+    return 0.0 if maxx_ < minx_
+    return 0.0 if maxy_ < miny_
     (maxx_ - minx_) * (maxy_ - miny_)
   end
 

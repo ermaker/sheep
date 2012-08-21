@@ -83,11 +83,21 @@ describe Histogram do
       subject.area(4.0, 4.0, 5.0, 5.0).should == 1.0
       subject.area(3.0, 2.0, 5.0, 6.0).should == 8.0
     end
+
+    it 'works with special cases' do
+      subject.area(0.0, 0.0, 0.0, 0.0).should == 0.0
+      subject.area(0.0, 0.0, 1.0, 0.0).should == 0.0
+      subject.area(0.0, 0.0, 0.0, 1.0).should == 0.0
+      subject.area(1.0, 1.0, 0.0, 0.0).should == 0.0
+      subject.area(1.0, 0.0, 0.0, 0.0).should == 0.0
+      subject.area(0.0, 1.0, 0.0, 0.0).should == 0.0
+      subject.area(1.0, 0.0, 0.0, 1.0).should == 0.0
+      subject.area(0.0, 1.0, 1.0, 0.0).should == 0.0
+    end
   end
 
   context '#query' do
     it 'works' do
-      pending
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
       subject.query(4.0, 2.0, 5.0, 3.0).should == 1
       subject.query(3.0, 5.0, 4.0, 6.0).should == 2
