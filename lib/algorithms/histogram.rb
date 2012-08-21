@@ -15,21 +15,29 @@ module Algorithms
     def bounds qminx, qminy, qmaxx, qmaxy
       lminx = (miny..maxy).
         step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qminy}.min
+      lminx = [maxy, stepx] unless lminx
       lminy = (minx..maxx).
         step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qminx}.min
+      lminy = [maxx, stepy] unless lminy
       lmaxx = (miny..maxy).
         step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qmaxy}.max
+      lmaxx = [miny, 0] unless lmaxx
       lmaxy = (minx..maxx).
         step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qmaxx}.max
+      lmaxy = [minx, 0] unless lmaxy
 
       uminx = (miny..maxy).
         step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qminy}.max
+      uminx = [miny, 0] unless uminx
       uminy = (minx..maxx).
         step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qminx}.max
+      uminy = [minx, 0] unless uminy
       umaxx = (miny..maxy).
         step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qmaxy}.min
+      umaxx = [maxy, stepx] unless umaxx
       umaxy = (minx..maxx).
         step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qmaxx}.min
+      umaxy = [maxx, stepy] unless umaxy
 
       return [
         [lminx, lminy, lmaxx, lmaxy].map{|v|v[1]},

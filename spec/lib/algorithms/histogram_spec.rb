@@ -48,6 +48,33 @@ describe Algorithms::Histogram do
         [0.0, 3.0, 8.0, 6.0],
       ]
     end
+
+    it 'works with special cases' do
+      subject.bounds(-100.0, -100.0, 100.0, 100.0).should == [
+        [0, 0, 2, 2],
+        [0, 0, 2, 2],
+        [0.0, 0.0, 8.0, 6.0],
+        [0.0, 0.0, 8.0, 6.0],
+      ]
+      subject.bounds(-100.0, -100.0, -50.0, -50.0).should == [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0],
+      ]
+      subject.bounds(3.0, -10.0, 10.0, 50.0).should == [
+        [0, 1, 2, 2],
+        [0, 1, 2, 2],
+        [0.0, 3.0, 8.0, 6.0],
+        [0.0, 3.0, 8.0, 6.0],
+      ]
+      subject.bounds(7.0, 9.0, 9.0, 11.0).should == [
+        [2, 2, 2, 2],
+        [2, 2, 2, 2],
+        [8.0, 6.0, 8.0, 6.0],
+        [8.0, 6.0, 8.0, 6.0],
+      ]
+    end
   end
 
   context '#exact_query' do
@@ -104,6 +131,13 @@ describe Algorithms::Histogram do
       subject.query(3.0, 4.0, 5.0, 6.0).should == 2.0/3.0
       subject.query(4.0, 4.0, 5.0, 5.0).should == 1.0/6.0
       subject.query(3.0, 2.0, 5.0, 6.0).should == 1.0
+    end
+
+    it 'works with special cases' do
+      subject.query(-100.0, -100.0, 100.0, 100.0).should == 3
+      subject.query(-100.0, -100.0, -50.0, -50.0).should == 0
+      subject.query(3.0, -10.0, 10.0, 50.0).should == 3
+      subject.query(7.0, 9.0, 9.0, 11.0).should == 0
     end
   end
 end
