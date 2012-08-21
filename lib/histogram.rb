@@ -1,0 +1,2 @@
+class Histogram
+end
