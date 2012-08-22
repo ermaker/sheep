@@ -3,7 +3,8 @@ module Algorithms
     attr_accessor :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
 
     def initialize sheep, stepx, stepy
-      @data = sheep.euler_histogram(minx, miny, maxx, maxy, stepx, stepy)
+      @data = sheep.euler_histogram(
+        sheep.objects, sheep.minx, sheep.miny, sheep.maxx, sheep.maxy, stepx, stepy)
       @minx = sheep.minx
       @miny = sheep.miny
       @maxx = sheep.maxx
@@ -49,7 +50,7 @@ module Algorithms
 
     def exact_query minx, miny, maxx, maxy
       (data[minx*2..(maxx-1)*2]||[]).
-        map{|line|line[miny*2..(maxy-1)*2].inject(:+) || 0}.inject(:+) || 0
+        map{|line|(line[miny*2..(maxy-1)*2]||[]).inject(0,:+)}.inject(0,:+)
     end
 
     def area minx_, miny_, maxx_, maxy_

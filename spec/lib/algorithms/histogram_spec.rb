@@ -4,6 +4,11 @@ describe Algorithms::Histogram do
   subject do
     described_class.new(
       double(
+        :objects => [
+          [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
+          [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
+          [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
+    ],
         :euler_histogram => [
           [1, -1, 2],
           [-1, 1, -1],
