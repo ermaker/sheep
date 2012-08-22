@@ -46,21 +46,24 @@ class Sheep
     size = minmax.map{|v| v[1]}
 
     canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
+    pbar = ProgressBar.new('Draw objects', @objects.size)
     gc = Magick::Draw.new
+    _capture gc, scale, pbar
+    pbar.finish
+    gc.draw(canvas)
+    canvas.flip!
+    canvas.write(filename)
+  end
+
+  def _capture gc, scale, pbar
     gc.stroke('#001aff')
     gc.stroke_width(scale/5000)
     gc.fill('transparent')
 
-    pbar = ProgressBar.new('Draw objects', @objects.size)
     @objects.each do |object|
       gc.polygon(*object.flatten.map{|v|v*scale})
       pbar.inc
     end
-    pbar.finish
-
-    gc.draw(canvas)
-    canvas.flip!
-    canvas.write(filename)
   end
 
   def euler_histogram_step objs, minx, miny, maxx, maxy, stepx, stepy,
