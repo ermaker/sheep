@@ -9,12 +9,22 @@ class Sheep
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
   class NUMBEROF_POINTS_NOT_MATCHED < Exception; end
 
-  attr_accessor :objects
+  attr_accessor :minx, :miny, :maxx, :maxy
+
+  attr_reader :objects
+  def objects= value
+    @objects = value
+    points = @objects.flatten(1)
+    @minx = points.map{|v|v[0]}.min
+    @miny = points.map{|v|v[1]}.min
+    @maxx = points.map{|v|v[0]}.max
+    @maxy = points.map{|v|v[1]}.max
+  end
 
   def load filename
     open(filename) do |file|
       numberof_objects = file.readline.to_i
-      @objects = file.each_line.map do |line|
+      self.objects = file.each_line.map do |line|
         numberof_points, *points = line.split
         numberof_points = numberof_points.to_i
         points = points.map(&:to_f).each_slice(2).to_a

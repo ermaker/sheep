@@ -12,6 +12,11 @@ describe Sheep do
       map = fixture('2.map')
       subject.load map
       subject.objects.should == [[[1.0,1.0],[2.0,1.0],[2.0,2.0],[1.0,2.0]]]
+
+      subject.minx.should == 1.0
+      subject.miny.should == 1.0
+      subject.maxx.should == 2.0
+      subject.maxy.should == 2.0
     end
     it 'reads map with 3.map' do
       map = fixture('3.map')
@@ -20,6 +25,11 @@ describe Sheep do
         [[1.0,1.0],[2.0,1.0],[2.0,2.0],[1.0,2.0]],
         [[3.0,3.0],[4.0,3.0],[4.0,4.0],[3.0,4.0]],
       ]
+
+      subject.minx.should == 1.0
+      subject.miny.should == 1.0
+      subject.maxx.should == 4.0
+      subject.maxy.should == 4.0
     end
     it 'raises an error with _1.map' do
       expect do
@@ -138,6 +148,12 @@ describe Sheep do
         [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
         [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
       ]
+
+      subject.minx.should == 1.0
+      subject.miny.should == 1.0
+      subject.maxx.should == 5.0
+      subject.maxy.should == 7.0
+
       subject.query_all(
         0.0, 0.0, 6.0, 8.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [3, 3]
       subject.query_all(
