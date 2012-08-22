@@ -37,6 +37,10 @@ class Sheep
     end
   end
 
+  def capture_size
+    @objects.size
+  end
+
   def capture filename
     scale = 10000
     margin = 200
@@ -46,7 +50,7 @@ class Sheep
     size = minmax.map{|v| v[1]}
 
     canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
-    pbar = ProgressBar.new('Draw objects', @objects.size)
+    pbar = ProgressBar.new('Draw objects', capture_size)
     gc = Magick::Draw.new
     _capture gc, scale, pbar
     pbar.finish
