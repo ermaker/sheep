@@ -59,6 +59,7 @@ class Sheep
     pbar.finish
 
     gc.draw(canvas)
+    canvas.flip!
     canvas.write(filename)
   end
 
