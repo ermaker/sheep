@@ -1,4 +1,5 @@
 require 'algorithms/histogram'
+require 'sheep'
 
 describe Algorithms::Histogram do
   subject do
@@ -146,6 +147,23 @@ describe Algorithms::Histogram do
       subject.query(-100.0, -100.0, -50.0, -50.0).should == 0
       subject.query(3.0, -10.0, 10.0, 50.0).should == 3
       subject.query(7.0, 9.0, 9.0, 11.0).should == 0
+    end
+  end
+end
+
+describe Algorithms::Histogram, 'with special objects' do
+  subject do
+    s = Sheep.new
+    s.objects = [
+      [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
+    ]
+    described_class.new(s, 2, 2)
+  end
+
+  context '#query' do
+    it 'works' do
+      subject.query(4.0, 2.0, 5.0, 3.0).should_not be_nan
+      subject.query(4.0, 2.0, 5.0, 3.0).should == 0.0
     end
   end
 end

@@ -67,6 +67,8 @@ module Algorithms
       u_a = area(*ubound)
       q_a = area(qminx, qminy, qmaxx, qmaxy)
       return exact_query(*uidx) if lidx == uidx
+      return 0.0 if u_a == 0.0 and l_a == 0.0
+      raise if u_a == l_a
       return (q_a-l_a)/(u_a-l_a)*(upper-lower) + lower
     end
   end

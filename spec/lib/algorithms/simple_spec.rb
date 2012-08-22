@@ -12,15 +12,22 @@ describe Algorithms::Simple do
     described_class.new(sheep, 2, 2, 2)
   end
 
+  context '#histograms' do
+    it 'works' do
+      subject.histograms.should have(2).items
+      subject.histograms[0].query(0.0, 0.0, 6.0, 8.0).should == 2
+      subject.histograms[1].query(0.0, 0.0, 6.0, 8.0).should == 1
+    end
+  end
+
   context '#query' do
     it 'works' do
-      pending
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
-      subject.query(4.0, 2.0, 5.0, 3.0).should == 1.0/6.0
-      subject.query(3.0, 5.0, 4.0, 6.0).should == 1.0/6.0
-      subject.query(3.0, 4.0, 5.0, 6.0).should == 2.0/3.0
-      subject.query(4.0, 4.0, 5.0, 5.0).should == 1.0/6.0
-      subject.query(3.0, 2.0, 5.0, 6.0).should == 1.0
+      subject.query(4.0, 2.0, 5.0, 3.0).should == 0.5333333333333333
+      subject.query(3.0, 5.0, 4.0, 6.0).should == 0.6333333333333333
+      subject.query(3.0, 4.0, 5.0, 6.0).should == 1.5333333333333332
+      subject.query(4.0, 4.0, 5.0, 5.0).should == 0.26666666666666666
+      subject.query(3.0, 2.0, 5.0, 6.0).should == 2.3777777777777778
     end
 
     it 'works with special cases' do
