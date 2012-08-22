@@ -60,6 +60,10 @@ module Algorithms
     end
 
     def query qminx, qminy, qmaxx, qmaxy
+      qminx = minx if qminx < minx
+      qminy = miny if qminy < miny
+      qmaxx = maxx if qmaxx > maxx
+      qmaxy = maxy if qmaxy > maxy
       lidx, uidx, lbound, ubound = bounds(qminx, qminy, qmaxx, qmaxy)
       lower = exact_query(*lidx)
       upper = exact_query(*uidx)

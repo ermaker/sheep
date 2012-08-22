@@ -147,6 +147,9 @@ describe Algorithms::Histogram do
       subject.query(-100.0, -100.0, -50.0, -50.0).should == 0
       subject.query(3.0, -10.0, 10.0, 50.0).should == 3
       subject.query(7.0, 9.0, 9.0, 11.0).should == 0
+
+      subject.query(4.0, 4.0, 6.0, 8.0).should == 1.3333333333333333
+      subject.query(4.0, 4.0, 100.0, 100.0).should == 1.3333333333333333
     end
   end
 end

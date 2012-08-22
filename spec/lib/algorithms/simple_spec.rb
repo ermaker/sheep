@@ -64,7 +64,7 @@ describe Algorithms::Simple, 'with special objects' do
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
       subject.query(4.0, 2.0, 5.0, 3.0).should == 1.0
       subject.query(3.0, 5.0, 4.0, 6.0).should == 0.9
-      subject.query(3.0, 4.0, 5.0, 6.0).should == 2.6
+      subject.query(3.0, 4.0, 5.0, 6.0).should == 1.8
       subject.query(4.0, 4.0, 5.0, 5.0).should == 0.0
       subject.query(3.0, 2.0, 5.0, 6.0).should == 3.0
     end
