@@ -30,9 +30,9 @@ class Farm
 
   attr_accessor :sheep
 
-  def algorithm= value
+  def set_algorithm value, *args
     @algorithm_class = value
-    @algorithm = @algorithm_class.new @sheep.objects
+    @algorithm = @algorithm_class.new @sheep, *args
   end
 
   def query minx, miny, maxx, maxy

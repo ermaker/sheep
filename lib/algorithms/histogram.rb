@@ -2,12 +2,12 @@ module Algorithms
   class Histogram
     attr_accessor :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
 
-    def initialize data, minx, miny, maxx, maxy, stepx, stepy
-      @data = data
-      @minx = minx
-      @miny = miny
-      @maxx = maxx
-      @maxy = maxy
+    def initialize sheep, stepx, stepy
+      @data = sheep.euler_histogram(minx, miny, maxx, maxy, stepx, stepy)
+      @minx = sheep.minx
+      @miny = sheep.miny
+      @maxx = sheep.maxx
+      @maxy = sheep.maxy
       @stepx = stepx
       @stepy = stepy
     end

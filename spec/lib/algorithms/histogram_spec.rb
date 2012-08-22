@@ -2,11 +2,14 @@ require 'algorithms/histogram'
 
 describe Algorithms::Histogram do
   subject do
-    described_class.new [
-      [1, -1, 2],
-      [-1, 1, -1],
-      [2, -2, 2],
-    ], 0.0, 0.0, 6.0, 8.0, 2, 2
+    described_class.new(
+      double(
+        :euler_histogram => [
+          [1, -1, 2],
+          [-1, 1, -1],
+          [2, -2, 2],
+    ],
+    :minx => 0.0, :miny => 0.0, :maxx => 6.0, :maxy => 8.0), 2, 2)
   end
 
   context '#bounds' do

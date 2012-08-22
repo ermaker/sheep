@@ -5,8 +5,8 @@ module Algorithms
   class Naive
     attr_accessor :objects
 
-    def initialize objects
-      @objects = objects
+    def initialize sheep
+      @objects = sheep.objects
     end
 
     def query minx, miny, maxx, maxy
