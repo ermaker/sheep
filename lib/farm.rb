@@ -27,4 +27,15 @@ class Farm
       end
     end
   end
+
+  attr_accessor :sheep
+
+  def algorithm= value
+    @algorithm_class = value
+    @algorithm = @algorithm_class.new @sheep.objects
+  end
+
+  def query minx, miny, maxx, maxy
+    @algorithm.query minx, miny, maxx, maxy
+  end
 end

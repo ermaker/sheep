@@ -2,6 +2,8 @@ require 'RMagick'
 require 'progressbar'
 require 'geometry'
 require 'ext/geometry'
+require 'algorithms/naive'
+require 'algorithms/histogram'
 
 class Sheep
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
@@ -107,5 +109,16 @@ class Sheep
         euler_histogram_step(objs,minx,miny,maxx,maxy,stepx,stepy,idxx,idxy)
       end
     end
+  end
+
+  def query_all minx, miny, maxx, maxy, eminx, eminy, emaxx, emaxy, stepx, stepy
+    naive = Algorithms::Naive.new @objects
+    histogram = Algorithms::Histogram.new(
+      euler_histogram(@objects, eminx, eminy, emaxx, emaxy, stepx, stepy),
+      eminx, eminy, emaxx, emaxy, stepx, stepy)
+    return [
+      naive.query(minx, miny, maxx, maxy),
+      histogram.query(minx, miny, maxx, maxy),
+    ]
   end
 end
