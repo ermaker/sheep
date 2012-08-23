@@ -1,10 +1,14 @@
 module Algorithms
   class Histogram
-    attr_accessor :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
+    attr_accessor :sheep, :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
+
+    def data
+      @data ||= @sheep.euler_histogram(
+        sheep.objects, sheep.minx, sheep.miny, sheep.maxx, sheep.maxy, stepx, stepy)
+    end
 
     def initialize sheep, stepx, stepy
-      @data = sheep.euler_histogram(
-        sheep.objects, sheep.minx, sheep.miny, sheep.maxx, sheep.maxy, stepx, stepy)
+      @sheep = sheep
       @minx = sheep.minx
       @miny = sheep.miny
       @maxx = sheep.maxx
@@ -74,6 +78,44 @@ module Algorithms
       return 0.0 if u_a == 0.0 and l_a == 0.0
       raise if u_a == l_a
       return (q_a-l_a)/(u_a-l_a)*(upper-lower) + lower
+    end
+
+    def capture_size
+      (stepx+1) * (stepy+1)
+    end
+
+    def capture filename
+      scale = 10000
+      margin = 200
+
+      points = sheep.objects.flatten(1)
+      minmax = [points.map{|v|v[0]}.minmax, points.map{|v|v[1]}.minmax]
+      size = minmax.map{|v| v[1]}
+
+      canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
+      pbar = ProgressBar.new('Draw objects', sheep.capture_size + capture_size)
+      gc = Magick::Draw.new
+      _capture gc, scale, pbar
+      pbar.finish
+      gc.draw(canvas)
+      canvas.flip!
+      canvas.write(filename)
+    end
+
+    def _capture gc, scale, pbar
+      sheep._capture gc, scale, pbar
+      gc.stroke('#001aff')
+      gc.stroke_width(scale/10000)
+
+      (minx..maxx).step((maxx-minx)/stepy).each do |x|
+        gc.line(x*scale, miny*scale, x*scale, maxy*scale)
+        pbar.inc
+      end
+
+      (miny..maxy).step((maxy-miny)/stepx).each do |y|
+        gc.line(minx*scale, y*scale, maxx*scale, y*scale)
+        pbar.inc
+      end
     end
   end
 end

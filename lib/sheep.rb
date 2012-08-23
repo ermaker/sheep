@@ -60,7 +60,7 @@ class Sheep
   end
 
   def _capture gc, scale, pbar
-    gc.stroke('#001aff')
+    gc.stroke('#000000')
     gc.stroke_width(scale/5000)
     gc.fill('transparent')
 
