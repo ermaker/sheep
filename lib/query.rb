@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Query
   class << self
     def generate sheep, area
@@ -11,6 +13,12 @@ class Query
       x = sheep.minx + (sheep.maxx-sheep.minx-width) * rand
       y = sheep.miny + (sheep.maxy-sheep.miny-height) * rand
       [x, y, x+width, y+height]
+    end
+
+    def save filename, queries
+      File.open(filename, 'w') do |f|
+        f << queries.to_yaml
+      end
     end
   end
 end

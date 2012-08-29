@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'sheep'
 require 'query'
+require 'stringio'
+require 'yaml'
 
 describe Query do
   context '.generate' do
@@ -20,6 +22,22 @@ describe Query do
         query[1].should < query[3]
         ((query[2]-query[0]) * (query[3]-query[1])).should be_within(0.00000001).of((sheep.maxx-sheep.minx)*(sheep.maxy-sheep.miny)*area)
       end
+    end
+  end
+
+  context '.save' do
+    it 'works' do
+      sheep = Sheep.new
+      sheep.load fixture('3.map')
+      area = 0.01
+      queries = 100.times.map { Query.generate sheep, area }
+
+      result = StringIO.new
+      File.stub(:open).and_yield(result)
+
+      filename = tmp('3.query')
+      Query.save filename, queries
+      YAML.load(result.string).should == queries
     end
   end
 end
