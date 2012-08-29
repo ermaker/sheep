@@ -20,5 +20,9 @@ class Query
         f << queries.to_yaml
       end
     end
+
+    def load filename
+      YAML.load(File.read(filename))
+    end
   end
 end

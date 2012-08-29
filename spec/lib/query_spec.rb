@@ -40,4 +40,18 @@ describe Query do
       YAML.load(result.string).should == queries
     end
   end
+
+  context '.load' do
+    it 'works' do
+      sheep = Sheep.new
+      sheep.load fixture('3.map')
+      area = 0.01
+      queries = 100.times.map { Query.generate sheep, area }
+
+      File.stub(:read).and_return(StringIO.new(queries.to_yaml))
+      filename = tmp('3.query')
+      result = Query.load filename
+      result.should == queries
+    end
+  end
 end
