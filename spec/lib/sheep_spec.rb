@@ -140,33 +140,4 @@ describe Sheep do
       ]
     end
   end
-
-  context '#query_all' do
-    it 'works' do
-      pending
-      subject.objects = [
-        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
-        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
-        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
-      ]
-
-      subject.minx.should == 1.0
-      subject.miny.should == 1.0
-      subject.maxx.should == 5.0
-      subject.maxy.should == 7.0
-
-      subject.query_all(
-        0.0, 0.0, 6.0, 8.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [3, 3]
-      subject.query_all(
-        4.0, 2.0, 5.0, 3.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [1, 1.0/6.0]
-      subject.query_all(
-        3.0, 5.0, 4.0, 6.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [2, 1.0/6.0]
-      subject.query_all(
-        3.0, 4.0, 5.0, 6.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [2, 2.0/3.0]
-      subject.query_all(
-        4.0, 4.0, 5.0, 5.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [0, 1.0/6.0]
-      subject.query_all(
-        3.0, 2.0, 5.0, 6.0, 0.0, 0.0, 6.0, 8.0, 2, 2).should == [3, 1.0]
-    end
-  end
 end
