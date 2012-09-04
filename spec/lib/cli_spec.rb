@@ -27,4 +27,32 @@ describe CLI do
       result.string.should == File.read(fixture('3_10_0.01_random.query'))
     end
   end
+
+  context '.make_hist' do
+    it 'works with :histogram' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3.map'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3.map'))))
+      File.stub(:open).with(fixture('3_0.001_histogram.hist'), 'w').and_yield(result)
+      memory = 0.001
+      method = :histogram
+      described_class.make_hist fixture('3.map'), memory, method
+      result.string.split("\n").reject {|v| v.include? 'sheep: '}.should ==
+        File.read(fixture('3_0.001_histogram.hist')).split("\n").reject {|v| v.include? 'sheep: '}
+    end
+
+    it 'works with :simple' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3.map'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3.map'))))
+      File.stub(:open).with(fixture('3_0.001_simple.hist'), 'w').and_yield(result)
+      memory = 0.001
+      method = :simple
+      described_class.make_hist fixture('3.map'), memory, method
+      result.string.split("\n").
+        reject {|v| v.include? '- *' or v.include? '- &'}.should ==
+        File.read(fixture('3_0.001_simple.hist')).split("\n").
+        reject {|v| v.include? '- *' or v.include? '- &'}
+    end
+  end
 end

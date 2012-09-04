@@ -14,6 +14,12 @@ module Algorithms
       end
     end
 
+    def data
+      @histograms.map do |histogram|
+        histogram.data
+      end
+    end
+
     def query minx, miny, maxx, maxy
       @histograms.map do |histogram|
         histogram.query(minx, miny, maxx, maxy)
