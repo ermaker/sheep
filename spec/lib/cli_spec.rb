@@ -55,4 +55,17 @@ describe CLI do
         reject {|v| v.include? '- *' or v.include? '- &'}
     end
   end
+
+  context '.make_makefile' do
+    it 'works' do
+      data = [fixture('3.data')]
+      number = [100]
+      memory = [0.001, 0.005, 0.01]
+      method = [:histogram, :simple]
+      area = [0.01, 0.05, 0.1]
+      dist = [:random]
+      measure = [:absolute]
+      described_class.make_makefile data, number, memory, method, area, dist, measure
+    end
+  end
 end
