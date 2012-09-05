@@ -1,6 +1,7 @@
 require 'farm'
 require 'sheep'
 require 'query'
+require 'algorithms/naive'
 require 'algorithms/histogram'
 require 'algorithms/simple'
 require 'yaml'
@@ -55,6 +56,28 @@ class CLI
       end
     end
 
+    def filename_sel query
+      dirname = File.dirname(query)
+      basename = File.basename(query, File.extname(query))
+      File.join(dirname, "#{basename}.sel")
+    end
+
+    def make_sel query
+      dirname = File.dirname(query)
+      basename = File.basename(query, File.extname(query))
+      map = File.join(dirname, "#{basename.split('_')[0]}.map")
+
+      farm = Farm.new
+      farm.sheep = Sheep.new
+      farm.sheep.load map
+      farm.set_algorithm Algorithms::Naive
+      queries = Query.load query
+      sel = queries.map {|query| farm.query(*query)}
+      File.open(filename_sel(query), 'w') do |f|
+        f<< sel.to_yaml
+      end
+    end
+
     def make_makefile data, number, memory, method, area, dist, measure
       output = StringIO.new
       all_files = []
@@ -76,6 +99,12 @@ class CLI
               output.puts <<-EOS
 #{filename_query(filename_map(data_), number_, area_, dist_)}: #{filename_map(data_)}
 \t$(SHEEP) 'CLI.make_query "#{filename_map(data_)}", #{number_}, #{area_}, :#{dist_}'
+
+              EOS
+              all_files << filename_sel(filename_query(filename_map(data_), number_, area_, dist_))
+              output.puts <<-EOS
+#{filename_sel(filename_query(filename_map(data_), number_, area_, dist_))}: #{filename_map(data_)} #{filename_query(filename_map(data_), number_, area_, dist_)}
+\t$(SHEEP) 'CLI.make_sel "#{filename_query(filename_map(data_), number_, area_, dist_)}"'
 
               EOS
             end

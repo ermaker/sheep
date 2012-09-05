@@ -56,6 +56,19 @@ describe CLI do
     end
   end
 
+  context '.make_sel' do
+    it 'works' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3.map'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3.map'))))
+      File.stub(:open).with(fixture('3_10_0.01_random.query'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_10_0.01_random.query'))))
+      File.stub(:open).with(fixture('3_10_0.01_random.sel'), 'w').and_yield(result)
+      described_class.make_sel fixture('3_10_0.01_random.query')
+      result.string.should == File.read(fixture('3_10_0.01_random.sel'))
+    end
+  end
+
   context '.make_makefile' do
     it 'works' do
       result = StringIO.new
