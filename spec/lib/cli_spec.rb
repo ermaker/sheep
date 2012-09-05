@@ -58,6 +58,8 @@ describe CLI do
 
   context '.make_makefile' do
     it 'works' do
+      result = StringIO.new
+      File.stub(:open).with('Makefile', 'w').and_yield(result)
       data = [fixture('3.data')]
       number = [100]
       memory = [0.001, 0.005, 0.01]
@@ -66,6 +68,7 @@ describe CLI do
       dist = [:random]
       measure = [:absolute]
       described_class.make_makefile data, number, memory, method, area, dist, measure
+      result.string.should == File.read(fixture('Makefile'))
     end
   end
 end
