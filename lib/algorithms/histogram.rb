@@ -64,6 +64,7 @@ module Algorithms
     end
 
     def query qminx, qminy, qmaxx, qmaxy
+      return 0.0 if sheep.objects.empty?
       qminx = minx if qminx < minx
       qminy = miny if qminy < miny
       qmaxx = maxx if qmaxx > maxx
