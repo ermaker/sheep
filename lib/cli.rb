@@ -140,6 +140,26 @@ class CLI
           end
         end
       end
+
+      data.each do |data_|
+        memory.each do |memory_|
+          method.each do |method_|
+            number.each do |number_|
+              area.each do |area_|
+                dist.each do |dist_|
+                  all_files << filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_))
+                  output.puts <<-EOS
+#{filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_))}: #{filename_query(filename_map(data_), number_, area_, dist_)} #{filename_hist(filename_map(data_), memory_, method_)}
+\t$(SHEEP) 'CLI.make_est "#{filename_hist(filename_map(data_), memory_, method_)}", "#{filename_query(filename_map(data_), number_, area_, dist_)}"'
+
+                  EOS
+                end
+              end
+            end
+          end
+        end
+      end
+
       File.open('Makefile', 'w') do |f|
         f.puts 'SHEEP = ruby -Ilib -rcli -e'
         f.puts
