@@ -78,6 +78,22 @@ class CLI
       end
     end
 
+    def filename_est hist, query
+      dirname = File.dirname(hist)
+      basename = File.basename(hist, File.extname(hist))
+      query_basename = File.basename(query, File.extname(query))
+      File.join(dirname, "#{basename}_#{query_basename.split('_')[1..-1].join('_')}.est")
+    end
+
+    def make_est hist, query
+      farm = YAML.load(File.read(hist))
+      queries = Query.load query
+      est = queries.map {|query| farm.query(*query)}
+      File.open(filename_est(hist, query), 'w') do |f|
+        f<< est.to_yaml
+      end
+    end
+
     def make_makefile data, number, memory, method, area, dist, measure
       output = StringIO.new
       all_files = []

@@ -69,6 +69,20 @@ describe CLI do
     end
   end
 
+  context '.make_est' do
+    it 'works' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3_0.001_histogram.hist'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_0.001_histogram.hist'))))
+      File.stub(:open).with(fixture('3_10_0.01_random.query'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_10_0.01_random.query'))))
+      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'w').and_yield(result)
+      described_class.make_est fixture('3_0.001_histogram.hist'), fixture('3_10_0.01_random.query')
+      result.string.should ==
+        File.read(fixture('3_0.001_histogram_10_0.01_random.est'))
+    end
+  end
+
   context '.make_makefile' do
     it 'works' do
       result = StringIO.new
