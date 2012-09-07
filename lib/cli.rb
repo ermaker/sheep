@@ -94,17 +94,24 @@ class CLI
       end
     end
 
-    def filename_err est, sel, measure
+    def filename_err est, measure
       dirname = File.dirname(est)
       basename = File.basename(est, File.extname(est))
       File.join(dirname, "#{basename}_#{measure}.err")
     end
 
-    def make_err est, sel, measure
+    def make_err est, measure
+      dirname = File.dirname(est)
+      basename = File.basename(est, File.extname(est)).split('_')
+      sel = File.join(dirname, "#{([basename[0]]+basename[-3..-1]).join('_')}.sel")
+
       est_values = YAML.load(File.read(est))
       sel_values = YAML.load(File.read(sel))
-      err = sel_values.zip(est_values).map{|s,e|(s-e).abs}
-      File.open(filename_err(est, sel, measure), 'w') do |f|
+      err = case measure
+            when :absolute
+              sel_values.zip(est_values).map{|s,e|(s-e).abs}
+            end
+      File.open(filename_err(est, measure), 'w') do |f|
         f<< err.to_yaml
       end
     end
@@ -168,6 +175,27 @@ class CLI
 \t$(SHEEP) 'CLI.make_est "#{filename_hist(filename_map(data_), memory_, method_)}", "#{filename_query(filename_map(data_), number_, area_, dist_)}"'
 
                   EOS
+                end
+              end
+            end
+          end
+        end
+      end
+
+      data.each do |data_|
+        memory.each do |memory_|
+          method.each do |method_|
+            number.each do |number_|
+              area.each do |area_|
+                dist.each do |dist_|
+                  measure.each do |measure_|
+                    all_files << filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_)
+                    output.puts <<-EOS
+#{filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_)}: #{filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_))} #{filename_sel(filename_query(filename_map(data_), number_, area_, dist_))}
+\t$(SHEEP) 'CLI.make_err "#{filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_))}", :#{measure_}'
+
+                  EOS
+                  end
                 end
               end
             end

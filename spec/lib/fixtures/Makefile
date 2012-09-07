@@ -1,6 +1,6 @@
 SHEEP = ruby -Ilib -rcli -e
 
-default: /home/mwlee/proj/sheep/spec/lib/fixtures/3.map /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random.est
+default: /home/mwlee/proj/sheep/spec/lib/fixtures/3.map /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple.hist /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.01_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.05_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.1_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.01_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.05_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.1_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.01_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.05_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.1_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.01_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.05_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.1_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.01_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.05_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.1_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.01_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.05_random_absolute.err /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random_absolute.err
 
 /home/mwlee/proj/sheep/spec/lib/fixtures/3.map: /home/mwlee/proj/sheep/spec/lib/fixtures/3.data
 	$(SHEEP) 'CLI.make_map "/home/mwlee/proj/sheep/spec/lib/fixtures/3.data"'
@@ -94,4 +94,58 @@ default: /home/mwlee/proj/sheep/spec/lib/fixtures/3.map /home/mwlee/proj/sheep/s
 
 /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random.est: /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.query /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple.hist
 	$(SHEEP) 'CLI.make_est "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple.hist", "/home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.query"'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.01_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.01_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.05_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.05_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.1_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_histogram_100_0.1_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.01_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.01_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.05_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.05_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.1_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.001_simple_100_0.1_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.01_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.01_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.05_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.05_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.1_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_histogram_100_0.1_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.01_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.01_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.05_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.05_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.1_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.005_simple_100_0.1_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.01_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.01_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.05_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.05_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.1_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_histogram_100_0.1_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.01_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.01_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.01_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.01_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.05_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.05_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.05_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.05_random.est", :absolute'
+
+/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random_absolute.err: /home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random.est /home/mwlee/proj/sheep/spec/lib/fixtures/3_100_0.1_random.sel
+	$(SHEEP) 'CLI.make_err "/home/mwlee/proj/sheep/spec/lib/fixtures/3_0.01_simple_100_0.1_random.est", :absolute'
 
