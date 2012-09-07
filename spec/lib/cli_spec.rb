@@ -83,6 +83,20 @@ describe CLI do
     end
   end
 
+  context '.make_err' do
+    it 'works' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_0.001_histogram_10_0.01_random.est'))))
+      File.stub(:open).with(fixture('3_10_0.01_random.sel'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_10_0.01_random.sel'))))
+      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random_absolute.err'), 'w').and_yield(result)
+      described_class.make_err fixture('3_0.001_histogram_10_0.01_random.est'), fixture('3_10_0.01_random.sel'), :absolute
+      result.string.should ==
+        File.read(fixture('3_0.001_histogram_10_0.01_random_absolute.err'))
+    end
+  end
+
   context '.make_makefile' do
     it 'works' do
       result = StringIO.new

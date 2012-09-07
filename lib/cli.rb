@@ -94,6 +94,21 @@ class CLI
       end
     end
 
+    def filename_err est, sel, measure
+      dirname = File.dirname(est)
+      basename = File.basename(est, File.extname(est))
+      File.join(dirname, "#{basename}_#{measure}.err")
+    end
+
+    def make_err est, sel, measure
+      est_values = YAML.load(File.read(est))
+      sel_values = YAML.load(File.read(sel))
+      err = sel_values.zip(est_values).map{|s,e|(s-e).abs}
+      File.open(filename_err(est, sel, measure), 'w') do |f|
+        f<< err.to_yaml
+      end
+    end
+
     def make_makefile data, number, memory, method, area, dist, measure
       output = StringIO.new
       all_files = []
