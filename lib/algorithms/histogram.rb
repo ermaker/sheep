@@ -7,7 +7,18 @@ module Algorithms
         sheep.objects, sheep.minx, sheep.miny, sheep.maxx, sheep.maxy, stepx, stepy)
     end
 
-    def initialize sheep, stepx, stepy
+    def initialize sheep, *args
+      stepx, stepy = case args.size
+                     when 1
+                       memory_size = args[0]
+                       numberof_variables = memory_size / 4
+                       good_size = (- 0.5 +
+                                    Math.sqrt(numberof_variables-6)/2.0).floor
+                       [good_size, good_size]
+                     when 2
+                       args
+                     else
+                     end
       @sheep = sheep
       @minx = sheep.minx
       @miny = sheep.miny

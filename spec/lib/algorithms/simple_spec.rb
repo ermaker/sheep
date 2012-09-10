@@ -77,3 +77,23 @@ describe Algorithms::Simple, 'with special objects' do
     end
   end
 end
+
+describe Algorithms::Simple, 'with memory size' do
+  subject do
+    sheep = Sheep.new
+    sheep.objects = [
+      [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
+      [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
+      [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
+    ]
+    described_class.new(sheep, 1024)
+  end
+
+  it 'has the correct size' do
+    subject.histograms.should have(6).items
+    subject.histograms.each do |histogram|
+      histogram.stepx.should == 2
+      histogram.stepy.should == 2
+    end
+  end
+end

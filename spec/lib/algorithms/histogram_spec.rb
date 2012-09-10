@@ -170,3 +170,18 @@ describe Algorithms::Histogram, 'with special objects' do
     end
   end
 end
+
+describe Algorithms::Histogram, 'with memory size' do
+  subject do
+    s = Sheep.new
+    s.objects = [
+      [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
+    ]
+    described_class.new(s, 1024)
+  end
+
+  it 'has the correct size' do
+    subject.stepx.should == 7
+    subject.stepy.should == 7
+  end
+end
