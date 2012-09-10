@@ -44,12 +44,7 @@ class CLI
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
-      case method
-      when :histogram
-        farm.set_algorithm Algorithms.const_get(method.capitalize), Math.sqrt(memory*1024*1024).to_i, Math.sqrt(memory*1024*1024).to_i
-      when :simple
-        farm.set_algorithm Algorithms.const_get(method.capitalize), ((memory*1024*1024)**(1.0/3)).to_i, ((memory*1024*1024)**(1.0/3)).to_i, ((memory*1024*1024)**(1.0/3)).to_i
-      end
+      farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024*1024
       farm.data
       File.open(filename_hist(map, memory, method), 'w') do |f|
         f << farm.to_yaml
