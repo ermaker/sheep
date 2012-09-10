@@ -110,6 +110,8 @@ class CLI
       err = case measure
             when :absolute
               sel_values.zip(est_values).map{|s,e|(s-e).abs}
+            when :relative
+              sel_values.zip(est_values).map{|s,e|(s-e).abs/[s,1].max}
             end
       File.open(filename_err(est, measure), 'w') do |f|
         f<< err.to_yaml

@@ -84,7 +84,7 @@ describe CLI do
   end
 
   context '.make_err' do
-    it 'works' do
+    it 'works on absolute' do
       result = StringIO.new
       File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3_0.001_histogram_10_0.01_random.est'))))
@@ -94,6 +94,18 @@ describe CLI do
       described_class.make_err fixture('3_0.001_histogram_10_0.01_random.est'), :absolute
       result.string.should ==
         File.read(fixture('3_0.001_histogram_10_0.01_random_absolute.err'))
+    end
+
+    it 'works on relative' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_0.001_histogram_10_0.01_random.est'))))
+      File.stub(:open).with(fixture('3_10_0.01_random.sel'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_10_0.01_random.sel'))))
+      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random_relative.err'), 'w').and_yield(result)
+      described_class.make_err fixture('3_0.001_histogram_10_0.01_random.est'), :relative
+      result.string.should ==
+        File.read(fixture('3_0.001_histogram_10_0.01_random_relative.err'))
     end
   end
 
@@ -107,7 +119,7 @@ describe CLI do
       method = [:histogram, :simple]
       area = [0.01, 0.05, 0.1]
       dist = [:random]
-      measure = [:absolute]
+      measure = [:absolute, :relative]
       described_class.make_makefile data, number, memory, method, area, dist, measure
       result.string.should == File.read(fixture('Makefile'))
     end
