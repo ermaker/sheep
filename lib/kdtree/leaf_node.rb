@@ -1,3 +1,6 @@
+require 'geometry'
+require 'ext/geometry'
+
 module Kdtree
   class LeafNode
     attr_reader :mbr
@@ -14,6 +17,17 @@ module Kdtree
       maxx = x.max
       maxy = y.max
       @mbr = [minx, miny, maxx, maxy]
+    end
+
+    def query minx, miny, maxx, maxy
+      query_area = Polygon [
+        Point(minx, miny),
+        Point(maxx, miny),
+        Point(maxx, maxy),
+        Point(minx, maxy),
+      ]
+      Polygon(@object.map{|p|Geometry::Point.new_by_array(p)}).
+        counting?(query_area) ? 1 : 0
     end
   end
 end

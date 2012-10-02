@@ -23,4 +23,26 @@ describe Kdtree::LeafNode do
       end
     end
   end
+
+  context '#query' do
+    it 'works' do
+      queries = [
+        [0.0, 0.0, 1.0, 1.0],
+        [1.0, 1.0, 4.0, 4.0],
+        [3.0, 3.0, 6.0, 6.0],
+        [3.0, 1.0, 6.0, 3.0],
+      ]
+      expected = [
+        [0, 1, 1, 1],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+      ]
+      result = @leaf_nodes.map do |leaf_node|
+        queries.map do |query|
+          leaf_node.query *query
+        end
+      end
+      result.should == expected
+    end
+  end
 end
