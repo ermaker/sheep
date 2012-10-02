@@ -3,7 +3,9 @@ require 'ext/geometry'
 
 module Kdtree
   class LeafNode
-    attr_reader :mbr
+    def mbr
+      @mbr ||= calculate_mbr
+    end
 
     def initialize object
       @object = object
