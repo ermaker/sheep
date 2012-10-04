@@ -47,12 +47,12 @@ describe 'Kdtree speed' do
   it 'works' do
     @node.calculate_mbr
     expect do
-      $count = 0
       sel = @farm.query *@queries.first
     end.to change{Time.now}.by_at_most(0.01)
   end
 
-  it 'works on 20 queries', :if => false do
+  it 'works on 20 queries' do
+    @node.calculate_mbr
     expect do
       sel = @queries.map {|query| @farm.query(*query)}
     end.to change{Time.now}.by_at_most(0.2)
