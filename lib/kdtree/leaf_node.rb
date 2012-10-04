@@ -22,6 +22,8 @@ module Kdtree
     end
 
     def query minx, miny, maxx, maxy
+      return 0 unless [mbr[0], minx].max <= [mbr[2], maxx].min and [mbr[1], miny].max <= [mbr[3], maxy].min
+
       query_area = Polygon [
         Point(minx, miny),
         Point(maxx, miny),
