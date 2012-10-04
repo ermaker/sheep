@@ -30,22 +30,24 @@ describe 'Kdtree speed' do
     @farm.sheep.load fixture('Nanaimo.map')
     @farm.set_algorithm Algorithms::NaiveWithKdtree
     @queries = Query.load fixture('Nanaimo_20_0.1_random.query')
+    @node = @farm.instance_variable_get(:@algorithm).
+      instance_variable_get(:@kdtree)
   end
 
   it 'works' do
-    node = @farm.instance_variable_get(:@algorithm).
-      instance_variable_get(:@kdtree)
-    node.depth.should == 16
     $count = 0
     sel = @farm.query *@queries.first
 
     @farm.sheep.objects.should have(25755).items
+    @node.depth.should == 16
     sel.should == 237
     $count.should == 4536
   end
 
-  it 'works', :if => false do
+  it 'works' do
+    @node.calculate_mbr
     expect do
+      $count = 0
       sel = @farm.query *@queries.first
     end.to change{Time.now}.by_at_most(0.01)
   end
