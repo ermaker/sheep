@@ -16,7 +16,7 @@ module Kdtree
     end
     alias _query query
     def query minx, miny, maxx, maxy
-      return 0 unless [mbr[0], minx].max <= [mbr[2], maxx].min and [mbr[1], miny].max <= [mbr[3], maxy].min
+      $count ||= 0
       $count += 1
       _query minx, miny, maxx, maxy
     end
@@ -41,7 +41,7 @@ describe 'Kdtree speed' do
     @farm.sheep.objects.should have(25755).items
     @node.depth.should == 16
     sel.should == 237
-    $count.should == 4536
+    $count.should == 4635
   end
 
   it 'works' do
