@@ -24,14 +24,10 @@ module Kdtree
     def query minx, miny, maxx, maxy
       return 0 unless [mbr[0], minx].max <= [mbr[2], maxx].min and [mbr[1], miny].max <= [mbr[3], maxy].min
 
-      query_area = Polygon [
-        Point(minx, miny),
-        Point(maxx, miny),
-        Point(maxx, maxy),
-        Point(minx, maxy),
-      ]
-      Polygon(@object.map{|p|Geometry::Point.new_by_array(p)}).
-        counting?(query_area) ? 1 : 0
+      clipper = Clipper::Clipper.new
+      clipper.add_subject_polygon(@object)
+      clipper.add_clip_polygon([[minx,miny],[maxx,miny],[maxx,maxy],[minx,maxy]])
+      clipper.intersection.empty? ? 0 : 1
     end
   end
 end
