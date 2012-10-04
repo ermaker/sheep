@@ -10,7 +10,8 @@ module Algorithms
     end
 
     def query minx, miny, maxx, maxy
-      @kdtree.query minx, miny, maxx, maxy
+      #@kdtree.query minx, miny, maxx, maxy
+      Kdtree::Factory.query @kdtree, minx, miny, maxx, maxy
     end
   end
 end

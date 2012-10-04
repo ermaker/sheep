@@ -19,5 +19,27 @@ module Kdtree
       ]
       return Node.new *input_objects
     end
+
+    def self.query kdtree, minx, miny, maxx, maxy
+      polygon = [[minx,miny],[maxx,miny],[maxx,maxy],[minx,maxy]]
+      $clipper ||= Clipper::Clipper.new
+      result = 0
+      q = [kdtree]
+      until q.empty?
+        now = q.pop
+        now_mbr = now.mbr
+        next unless (now_mbr[0] > minx ? now_mbr[0] : minx) <= (now_mbr[2] < maxx ? now_mbr[2] : maxx) and (now_mbr[1] > miny ? now_mbr[1] : miny) <= (now_mbr[3] < maxy ? now_mbr[3] : maxy)
+        case now
+        when Node
+          q.push *now.nodes
+        when LeafNode
+          $clipper.clear!
+          $clipper.add_subject_polygon(now.object)
+          $clipper.add_clip_polygon(polygon)
+          result += 1 unless $clipper.intersection.empty?
+        end
+      end
+      return result
+    end
   end
 end

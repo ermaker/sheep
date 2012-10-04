@@ -4,6 +4,7 @@ require 'ext/geometry'
 module Kdtree
   class Node
     attr_reader :mbr
+    attr_reader :nodes
 
     def initialize *nodes
       @nodes = nodes
