@@ -3,12 +3,11 @@ require 'ext/geometry'
 
 module Kdtree
   class LeafNode
-    def mbr
-      @mbr ||= calculate_mbr
-    end
+    attr_reader :mbr
 
     def initialize object
       @object = object
+      calculate_mbr
     end
 
     def calculate_mbr
@@ -22,7 +21,6 @@ module Kdtree
     end
 
     def query minx, miny, maxx, maxy
-      mbr
       return 0 unless (@mbr[0] > minx ? @mbr[0] : minx) <= (@mbr[2] < maxx ? @mbr[2] : maxx) and (@mbr[1] > miny ? @mbr[1] : miny) <= (@mbr[3] < maxy ? @mbr[3] : maxy)
 
       $clipper ||= Clipper::Clipper.new
