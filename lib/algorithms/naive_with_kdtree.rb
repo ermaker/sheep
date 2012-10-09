@@ -1,4 +1,5 @@
 require 'kdtree/factory'
+require 'kdtree_query_c'
 
 module Algorithms
   class NaiveWithKdtree
@@ -11,7 +12,8 @@ module Algorithms
 
     def query minx, miny, maxx, maxy
       #@kdtree.query minx, miny, maxx, maxy
-      Kdtree::Factory.query @kdtree, minx, miny, maxx, maxy
+      #Kdtree::Factory.query @kdtree, minx, miny, maxx, maxy
+      Kdtree::Factory.query_c @kdtree, minx, miny, maxx, maxy
     end
   end
 end
