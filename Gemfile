@@ -10,6 +10,8 @@ group :test, :development do
   gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'rspec', :require => 'spec'
+  gem 'rake'
+  gem 'rake-compiler'
 end
 
 # vi: set ft=ruby:
