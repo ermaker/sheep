@@ -1,5 +1,6 @@
 require 'geometry'
 require 'ext/geometry'
+require 'kdtree_query_c'
 
 module Kdtree
   class Node
@@ -9,6 +10,7 @@ module Kdtree
     def initialize *nodes
       @nodes = nodes
       calculate_mbr
+      calculate_mbr_c
     end
 
     def calculate_mbr

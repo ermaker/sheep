@@ -10,6 +10,7 @@ module Kdtree
     def initialize object
       @object = object
       calculate_mbr
+      calculate_mbr_c
       calculate_object_c
     end
 

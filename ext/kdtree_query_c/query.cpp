@@ -12,6 +12,7 @@ static VALUE mKdtree;
 static VALUE cNode;
 static VALUE cLeafNode;
 static VALUE cObjectC;
+static VALUE cMBRC;
 
 static VALUE rb_kdtree_query_c(VALUE self, VALUE kdtree,
     VALUE minx_, VALUE miny_, VALUE maxx_, VALUE maxy_)
@@ -43,14 +44,9 @@ static VALUE rb_kdtree_query_c(VALUE self, VALUE kdtree,
     VALUE now = q.front();
     q.pop();
 
-    // now.mbr
-    double mbr_[4];
-    VALUE mbr = rb_iv_get(now, "@mbr");
-    VALUE *mbr_ptr = RARRAY_PTR(mbr);
-    mbr_[0] = NUM2DBL(mbr_ptr[0]);
-    mbr_[1] = NUM2DBL(mbr_ptr[1]);
-    mbr_[2] = NUM2DBL(mbr_ptr[2]);
-    mbr_[3] = NUM2DBL(mbr_ptr[3]);
+    // now.mbr_c
+    double* mbr_;
+    Data_Get_Struct(rb_iv_get(now, "@mbr_c"), double, mbr_);
 
     // cut
     if(!(MAX(mbr_[0],minx) <= MIN(mbr_[2],maxx) &&
@@ -127,6 +123,30 @@ static VALUE rb_kdtree_leaf_node_object_c(VALUE self)
   return Qnil;
 }
 
+static void rb_kdtree_node_or_leaf_node_mbr_c_destory(void* mbr)
+{
+  delete[] (double*)mbr;
+}
+
+static VALUE rb_kdtree_node_or_leaf_node_calculate_mbr_c(VALUE self)
+{
+  double* mbr_ = new double[4];
+  VALUE mbr = rb_iv_get(self, "@mbr");
+  VALUE *mbr_ptr = RARRAY_PTR(mbr);
+  mbr_[0] = NUM2DBL(mbr_ptr[0]);
+  mbr_[1] = NUM2DBL(mbr_ptr[1]);
+  mbr_[2] = NUM2DBL(mbr_ptr[2]);
+  mbr_[3] = NUM2DBL(mbr_ptr[3]);
+
+  VALUE mbr_c = Data_Wrap_Struct(cMBRC, 0,
+      rb_kdtree_node_or_leaf_node_mbr_c_destory, mbr_);
+  rb_obj_call_init(mbr_c, 0, 0);
+
+  rb_iv_set(self, "@mbr_c", mbr_c);
+
+  return Qnil;
+}
+
 extern "C" {
   void Init_kdtree_query_c()
   {
@@ -142,5 +162,12 @@ extern "C" {
         (VALUE(*)(ANYARGS))rb_kdtree_leaf_node_object_c, 0);
 
     cObjectC = rb_define_class_under(mKdtree, "ObjectC", rb_cObject);
+
+    rb_define_method(cNode, "calculate_mbr_c",
+        (VALUE(*)(ANYARGS))rb_kdtree_node_or_leaf_node_calculate_mbr_c, 0);
+    rb_define_method(cLeafNode, "calculate_mbr_c",
+        (VALUE(*)(ANYARGS))rb_kdtree_node_or_leaf_node_calculate_mbr_c, 0);
+
+    cMBRC = rb_define_class_under(mKdtree, "MBRC", rb_cObject);
   }
 }
