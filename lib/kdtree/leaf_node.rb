@@ -1,5 +1,6 @@
 require 'geometry'
 require 'ext/geometry'
+require 'kdtree_query_c'
 
 module Kdtree
   class LeafNode
@@ -9,6 +10,7 @@ module Kdtree
     def initialize object
       @object = object
       calculate_mbr
+      calculate_object_c
     end
 
     def calculate_mbr

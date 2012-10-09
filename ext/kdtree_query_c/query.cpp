@@ -9,6 +9,9 @@
 using namespace clipper;
 
 static VALUE mKdtree;
+static VALUE cNode;
+static VALUE cLeafNode;
+static VALUE cObjectC;
 
 static VALUE rb_kdtree_query_c(VALUE self, VALUE kdtree,
     VALUE minx_, VALUE miny_, VALUE maxx_, VALUE maxy_)
@@ -29,9 +32,6 @@ static VALUE rb_kdtree_query_c(VALUE self, VALUE kdtree,
 
   // clipper = Clipper.new
   Clipper clipper;
-
-  VALUE cNode = rb_const_get(mKdtree, rb_intern("Node"));
-  VALUE cLeafNode = rb_const_get(mKdtree, rb_intern("LeafNode"));
 
   unsigned long long result = 0;
   std::queue<VALUE> q;
@@ -74,19 +74,12 @@ static VALUE rb_kdtree_query_c(VALUE self, VALUE kdtree,
       // clipper.clear!
       clipper.Clear();
 
-      // now.object
-      VALUE object = rb_iv_get(now, "@object");
-      VALUE *object_ptr = RARRAY_PTR(object);
-      long object_len = RARRAY_LEN(object);
+      // now.object_c
+      TPolygon* polygon;
+      Data_Get_Struct(rb_iv_get(now, "@object_c"), TPolygon, polygon);
 
       // clipper.add_subject_polygon
-      TPolygon polygon;
-      for(long i=0; i<object_len;i++)
-      {
-        VALUE *point = RARRAY_PTR(object_ptr[i]);
-        polygon.push_back(DoublePoint(NUM2DBL(point[0]),NUM2DBL(point[1])));
-      }
-      clipper.AddPolygon(polygon, ptSubject);
+      clipper.AddPolygon(*polygon, ptSubject);
 
       // clipper.add_clip_polygon
       clipper.AddPolygon(clip_polygon, ptClip);
@@ -107,6 +100,33 @@ static VALUE rb_kdtree_query_c(VALUE self, VALUE kdtree,
   return ULL2NUM(result);
 }
 
+static void rb_kdtree_object_c_destory(void* polygon)
+{
+  delete (TPolygon*)polygon;
+}
+
+static VALUE rb_kdtree_leaf_node_object_c(VALUE self)
+{
+  VALUE object = rb_iv_get(self, "@object");
+  VALUE *object_ptr = RARRAY_PTR(object);
+  long object_len = RARRAY_LEN(object);
+
+  TPolygon* polygon = new TPolygon;
+  for(long i=0; i<object_len;i++)
+  {
+    VALUE *point = RARRAY_PTR(object_ptr[i]);
+    polygon->push_back(DoublePoint(NUM2DBL(point[0]),NUM2DBL(point[1])));
+  }
+
+  VALUE object_c = Data_Wrap_Struct(cObjectC, 0,
+      rb_kdtree_object_c_destory, polygon);
+  rb_obj_call_init(object_c, 0, 0);
+
+  rb_iv_set(self, "@object_c", object_c);
+
+  return Qnil;
+}
+
 extern "C" {
   void Init_kdtree_query_c()
   {
@@ -114,5 +134,13 @@ extern "C" {
     VALUE cFactory = rb_define_class_under(mKdtree, "Factory", rb_cObject);
     rb_define_singleton_method(cFactory, "query_c",
         (VALUE(*)(ANYARGS))rb_kdtree_query_c, 5);
+
+    cNode = rb_define_class_under(mKdtree, "Node", rb_cObject);
+    cLeafNode = rb_define_class_under(mKdtree, "LeafNode", rb_cObject);
+
+    rb_define_method(cLeafNode, "calculate_object_c",
+        (VALUE(*)(ANYARGS))rb_kdtree_leaf_node_object_c, 0);
+
+    cObjectC = rb_define_class_under(mKdtree, "ObjectC", rb_cObject);
   }
 }
