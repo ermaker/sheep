@@ -27,12 +27,16 @@ class CLI
     end
 
     def make_query map, number, area, dist
+      $logger.info('CLI.make_query') {'new & load map'}
       sheep = Sheep.new
       sheep.load map
+      $logger.info('CLI.make_query') {'Query.generate'}
       queries = number.times.map do
         Query.generate sheep, area
       end
+      $logger.info('CLI.make_query') {'Query.save'}
       Query.save filename_query(map, number, area, dist), queries
+      $logger.info('CLI.make_query') {'end'}
     end
 
     def filename_hist map, memory, method

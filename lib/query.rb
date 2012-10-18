@@ -16,9 +16,11 @@ class Query
     end
 
     def save filename, queries
+      $logger.info('Query.save') {'begin'}
       File.open(filename, 'w') do |f|
         f << queries.to_yaml
       end
+      $logger.info('Query.save') {'end'}
     end
 
     def load filename
