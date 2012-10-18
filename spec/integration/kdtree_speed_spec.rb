@@ -5,7 +5,7 @@ require 'algorithms/naive_with_kdtree'
 require 'query'
 
 describe 'Kdtree speed' do
-  before do
+  before(:all) do
     @farm = Farm.new
     @farm.sheep = Sheep.new
     @farm.sheep.load fixture('Nanaimo.map')
@@ -19,13 +19,13 @@ describe 'Kdtree speed' do
     @node.calculate_mbr
     expect do
       sel = @farm.query *@queries.first
-    end.to change{Time.now}.by_at_most(0.01)
+    end.to change{Time.now}.by_at_most(0.01*4)
   end
 
   it 'works on 20 queries' do
     @node.calculate_mbr
     expect do
       sel = @queries.map {|query| @farm.query(*query)}
-    end.to change{Time.now}.by_at_most(0.2)
+    end.to change{Time.now}.by_at_most(0.2*3)
   end
 end
