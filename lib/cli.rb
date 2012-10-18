@@ -70,22 +70,22 @@ class CLI
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
-      $logger.info('make_sel') {'set_algorithm'}
+      $logger.info('CLI.make_sel') {'set_algorithm'}
       farm.set_algorithm Algorithms::NaiveWithKdtree
-      $logger.info('make_sel') {'load query'}
+      $logger.info('CLI.make_sel') {'load query'}
       queries = Query.load query
-      $logger.info('make_sel') {'query start'}
+      $logger.info('CLI.make_sel') {'query start'}
       pbar = ProgressBar.new('Get result', queries.size, io)
       sel = queries.map do |query|
         pbar.inc
         farm.query(*query)
       end
       pbar.finish
-      $logger.info('make_sel') {'file write'}
+      $logger.info('CLI.make_sel') {'file write'}
       File.open(filename_sel(query), 'w') do |f|
         f<< sel.to_yaml
       end
-      $logger.info('make_sel') {'end'}
+      $logger.info('CLI.make_sel') {'end'}
     end
 
     def filename_est hist, query
