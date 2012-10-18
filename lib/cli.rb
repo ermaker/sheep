@@ -1,7 +1,7 @@
 require 'farm'
 require 'sheep'
 require 'query'
-require 'algorithms/naive'
+require 'algorithms/naive_with_kdtree'
 require 'algorithms/histogram'
 require 'algorithms/simple'
 require 'yaml'
@@ -65,7 +65,7 @@ class CLI
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
-      farm.set_algorithm Algorithms::Naive
+      farm.set_algorithm Algorithms::NaiveWithKdtree
       queries = Query.load query
       sel = queries.map {|query| farm.query(*query)}
       File.open(filename_sel(query), 'w') do |f|
