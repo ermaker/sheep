@@ -1,3 +1,4 @@
+require 'log_config'
 require 'farm'
 require 'sheep'
 require 'query'
@@ -57,7 +58,7 @@ class CLI
       File.join(dirname, "#{basename}.sel")
     end
 
-    def make_sel query
+    def make_sel query, io=$stderr
       dirname = File.dirname(query)
       basename = File.basename(query, File.extname(query))
       map = File.join(dirname, "#{basename.split('_')[0]}.map")
@@ -65,12 +66,22 @@ class CLI
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
+      $logger.info('make_sel') {'set_algorithm'}
       farm.set_algorithm Algorithms::NaiveWithKdtree
+      $logger.info('make_sel') {'load query'}
       queries = Query.load query
-      sel = queries.map {|query| farm.query(*query)}
+      $logger.info('make_sel') {'query start'}
+      pbar = ProgressBar.new('Get result', queries.size, io)
+      sel = queries.map do |query|
+        pbar.inc
+        farm.query(*query)
+      end
+      pbar.finish
+      $logger.info('make_sel') {'file write'}
       File.open(filename_sel(query), 'w') do |f|
         f<< sel.to_yaml
       end
+      $logger.info('make_sel') {'end'}
     end
 
     def filename_est hist, query
