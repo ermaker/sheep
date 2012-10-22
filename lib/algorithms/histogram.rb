@@ -3,7 +3,7 @@ module Algorithms
     attr_accessor :sheep, :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
 
     def data
-      @data ||= @sheep.euler_histogram(
+      @data ||= euler_histogram(
         sheep.objects, sheep.minx, sheep.miny, sheep.maxx, sheep.maxy, stepx, stepy)
     end
 
@@ -90,6 +90,65 @@ module Algorithms
       return 0.0 if u_a == 0.0 and l_a == 0.0
       raise if u_a == l_a
       return (q_a-l_a)/(u_a-l_a)*(upper-lower) + lower
+    end
+
+    def euler_histogram_step objs, minx, miny, maxx, maxy, stepx, stepy,
+      idxx, idxy
+      if idxx.odd? and idxy.odd?
+        return objs.count do |obj|
+          Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepx))
+        end
+      end
+
+      if idxx.even? and idxy.even?
+        return objs.count do |obj|
+          Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+            Polygon [
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+            Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+            Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2+1)*(maxy-miny)/stepx),
+            Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                  miny + ((idxx+1)/2+1)*(maxy-miny)/stepx),
+          ])
+        end
+      end
+
+      if idxx.even? and idxy.odd?
+        return -objs.count do |obj|
+          Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+            Segment(
+              Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                    miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+              Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                    miny + ((idxx+1)/2+1)*(maxy-miny)/stepx)
+          ))
+        end
+      end
+
+      if idxx.odd? and idxy.even?
+        return -objs.count do |obj|
+          Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
+            Segment(
+              Point(minx + ((idxy+1)/2)*(maxx-minx)/stepy,
+                    miny + ((idxx+1)/2)*(maxy-miny)/stepx),
+              Point(minx + ((idxy+1)/2+1)*(maxx-minx)/stepy,
+                    miny + ((idxx+1)/2)*(maxy-miny)/stepx)
+          ))
+        end
+      end
+    end
+
+    def euler_histogram objs, minx, miny, maxx, maxy, stepx, stepy
+      (0..stepx*2-2).map do |idxx|
+        (0..stepy*2-2).map do |idxy|
+          euler_histogram_step(objs,minx,miny,maxx,maxy,stepx,stepy,idxx,idxy)
+        end
+      end
     end
 
     def capture_size
