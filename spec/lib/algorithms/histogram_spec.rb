@@ -194,75 +194,55 @@ describe Algorithms::Histogram do
       [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
       [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
     ]
-    described_class.new(s, 2, 2)
+    s = described_class.new(s, 2, 2)
+    s.minx = 0.0
+    s.miny = 0.0
+    s.maxx = 6.0
+    s.maxy = 8.0
+    s
   end
 
   context '#euler_histogram_step' do
     it 'works if the target is a point' do
-      objects = [
-        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
-        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
-        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
-      ]
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 1, 1)
+      result = subject.euler_histogram_step(1, 1)
       result.should == 1
     end
     it 'works if the target is a segment' do
-      objects = [
-        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
-        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
-        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
-      ]
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 0, 1)
+      result = subject.euler_histogram_step(0, 1)
       result.should == -1
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 1, 0)
+      result = subject.euler_histogram_step(1, 0)
       result.should == -1
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 1, 2)
+      result = subject.euler_histogram_step(1, 2)
       result.should == -1
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 2, 1)
+      result = subject.euler_histogram_step(2, 1)
       result.should == -2
     end
     it 'works if the target is a cell' do
-      objects = [
-        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
-        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
-        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
-      ]
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 0, 0)
+      result = subject.euler_histogram_step(0, 0)
       result.should == 1
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 0, 2)
+      result = subject.euler_histogram_step(0, 2)
       result.should == 2
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 2, 0)
+      result = subject.euler_histogram_step(2, 0)
       result.should == 2
-      result = subject.euler_histogram_step(
-        objects, 0.0, 0.0, 6.0, 8.0, 2, 2, 2, 2)
+      result = subject.euler_histogram_step(2, 2)
       result.should == 2
     end
   end
 
   context '#euler_histogram' do
     it 'works' do
-      objects = [
-        [[2.0,1.0],[4.0,1.0],[4.0,6.0],[2.0,6.0]],
-        [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
-        [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
-      ]
-      result = subject.euler_histogram objects, 0.0, 0.0, 6.0, 8.0, 2, 2
+      subject.stepx = 2
+      subject.stepy = 2
+      result = subject.euler_histogram
       result.should == [
         [1, -1, 2],
         [-1, 1, -1],
         [2, -2, 2],
       ]
 
-      result = subject.euler_histogram objects, 0.0, 0.0, 6.0, 8.0, 3, 2
+      subject.stepx = 3
+      subject.stepy = 2
+      result = subject.euler_histogram
       result.should == [
         [1, -1, 2],
         [-1, 1, -2],
@@ -271,7 +251,9 @@ describe Algorithms::Histogram do
         [2, -2, 2],
       ]
 
-      result = subject.euler_histogram objects, 0.0, 0.0, 6.0, 8.0, 3, 3
+      subject.stepx = 3
+      subject.stepy = 3
+      result = subject.euler_histogram
       result.should == [
         [0, 0, 1, 0, 1],
         [0, 0, -1, 0, -1],

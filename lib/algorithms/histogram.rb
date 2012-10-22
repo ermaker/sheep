@@ -3,8 +3,7 @@ module Algorithms
     attr_accessor :sheep, :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
 
     def data
-      @data ||= euler_histogram(
-        sheep.objects, sheep.minx, sheep.miny, sheep.maxx, sheep.maxy, stepx, stepy)
+      @data ||= euler_histogram
     end
 
     def initialize sheep, *args
@@ -92,8 +91,8 @@ module Algorithms
       return (q_a-l_a)/(u_a-l_a)*(upper-lower) + lower
     end
 
-    def euler_histogram_step objs, minx, miny, maxx, maxy, stepx, stepy,
-      idxx, idxy
+    def euler_histogram_step idxx, idxy
+      objs = @sheep.objects
       if idxx.odd? and idxy.odd?
         return objs.count do |obj|
           Polygon(obj.map{|p|Geometry::Point.new_by_array(p)}).counting?(
@@ -143,10 +142,10 @@ module Algorithms
       end
     end
 
-    def euler_histogram objs, minx, miny, maxx, maxy, stepx, stepy
+    def euler_histogram
       (0..stepx*2-2).map do |idxx|
         (0..stepy*2-2).map do |idxy|
-          euler_histogram_step(objs,minx,miny,maxx,maxy,stepx,stepy,idxx,idxy)
+          euler_histogram_step(idxx,idxy)
         end
       end
     end
