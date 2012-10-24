@@ -27,16 +27,16 @@ class CLI
     end
 
     def make_query map, number, area, dist
-      $logger.info('CLI.make_query') {'new & load map'}
+      $logger.debug('CLI.make_query') {'new & load map'}
       sheep = Sheep.new
       sheep.load map
-      $logger.info('CLI.make_query') {'Query.generate'}
+      $logger.debug('CLI.make_query') {'Query.generate'}
       queries = number.times.map do
         Query.generate sheep, area
       end
-      $logger.info('CLI.make_query') {'Query.save'}
+      $logger.debug('CLI.make_query') {'Query.save'}
       Query.save filename_query(map, number, area, dist), queries
-      $logger.info('CLI.make_query') {'end'}
+      $logger.debug('CLI.make_query') {'end'}
     end
 
     def filename_hist map, memory, method
@@ -70,22 +70,22 @@ class CLI
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
-      $logger.info('CLI.make_sel') {'set_algorithm'}
+      $logger.debug('CLI.make_sel') {'set_algorithm'}
       farm.set_algorithm Algorithms::NaiveWithKdtree
-      $logger.info('CLI.make_sel') {'load query'}
+      $logger.debug('CLI.make_sel') {'load query'}
       queries = Query.load query
-      $logger.info('CLI.make_sel') {'query start'}
+      $logger.debug('CLI.make_sel') {'query start'}
       pbar = ProgressBar.new('Get result', queries.size, io)
       sel = queries.map do |query|
         pbar.inc
         farm.query(*query)
       end
       pbar.finish
-      $logger.info('CLI.make_sel') {'file write'}
+      $logger.debug('CLI.make_sel') {'file write'}
       File.open(filename_sel(query), 'w') do |f|
         f<< sel.to_yaml
       end
-      $logger.info('CLI.make_sel') {'end'}
+      $logger.debug('CLI.make_sel') {'end'}
     end
 
     def filename_est hist, query
