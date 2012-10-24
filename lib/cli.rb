@@ -16,7 +16,7 @@ class CLI
         File.basename(data, File.extname(data))+'.map')
     end
 
-    def make_map data, io=STDERR
+    def make_map data, io=$stderr
       Farm.convert data, filename_map(data), io
     end
 
