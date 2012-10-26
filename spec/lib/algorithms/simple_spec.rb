@@ -1,5 +1,6 @@
 require 'algorithms/simple'
 require 'sheep'
+require 'stringio'
 
 describe Algorithms::Simple do
   subject do
@@ -9,7 +10,9 @@ describe Algorithms::Simple do
       [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
       [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
     ]
-    described_class.new(sheep, 2, 2, 2)
+    result = described_class.new(sheep, 2, 2, 2)
+    result.data StringIO.new
+    result
   end
 
   context '#histograms' do
@@ -47,7 +50,9 @@ describe Algorithms::Simple, 'with special objects' do
       [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
       [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
     ]
-    described_class.new(sheep, 3, 2, 2)
+    result = described_class.new(sheep, 3, 2, 2)
+    result.data StringIO.new
+    result
   end
 
   context '#histograms' do
@@ -86,7 +91,9 @@ describe Algorithms::Simple, 'with memory size' do
       [[1.0,5.0],[5.0,5.0],[5.0,7.0],[1.0,7.0]],
       [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
     ]
-    described_class.new(sheep, 1024)
+    result = described_class.new(sheep, 1024)
+    result.data StringIO.new
+    result
   end
 
   it 'has the correct size' do

@@ -35,8 +35,8 @@ class Farm
     @algorithm = @algorithm_class.new @sheep, *args
   end
 
-  def data
-    @algorithm.data
+  def data io=$stderr
+    @algorithm.data io
   end
 
   def query minx, miny, maxx, maxy

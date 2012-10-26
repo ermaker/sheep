@@ -29,9 +29,20 @@ module Algorithms
       end
     end
 
-    def data
+    def data_size
+      @histograms.map(&:data_size).inject(:+)
+    end
+
+    def data io=$stderr
+      pbar = ProgressBar.new('Compute data', data_size, io)
+      result = _data pbar
+      pbar.finish
+      result
+    end
+
+    def _data pbar
       @histograms.map do |histogram|
-        histogram.data
+        histogram._data pbar
       end
     end
 

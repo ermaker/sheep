@@ -21,5 +21,8 @@ module Algorithms
           counting?(query_area)
       end
     end
+
+    def data *args
+    end
   end
 end

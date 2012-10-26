@@ -25,6 +25,7 @@ describe 'One step' do
     area = 0.01
     queries = 10.times.map { Query.generate farm.sheep, area }
     farm.set_algorithm Algorithms::Histogram, 4, 4
+    farm.data StringIO.new
     result = queries.map do |query|
       farm.query *query
     end

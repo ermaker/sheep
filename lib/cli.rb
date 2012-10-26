@@ -45,12 +45,12 @@ class CLI
       File.join(dirname, "#{basename}_#{memory}_#{method}.hist")
     end
 
-    def make_hist map, memory, method
+    def make_hist map, memory, method, io=$stderr
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
       farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024*1024
-      farm.data
+      farm.data io
       File.open(filename_hist(map, memory, method), 'w') do |f|
         f << farm.to_yaml
       end

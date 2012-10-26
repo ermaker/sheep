@@ -1,9 +1,22 @@
+require 'progressbar'
+
 module Algorithms
   class Histogram
     attr_accessor :sheep, :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
 
-    def data
-      @data ||= euler_histogram
+    def data_size
+      (stepx*2-1) * (stepy*2-1)
+    end
+
+    def data io=$stderr
+      pbar = ProgressBar.new('Compute data', data_size, io)
+      result = _data pbar
+      pbar.finish
+      result
+    end
+
+    def _data pbar
+      @data ||= euler_histogram(pbar)
     end
 
     def initialize sheep, *args
@@ -63,7 +76,7 @@ module Algorithms
     end
 
     def exact_query minx, miny, maxx, maxy
-      (data[minx*2..(maxx-1)*2]||[]).
+      (@data[minx*2..(maxx-1)*2]||[]).
         map{|line|(line[miny*2..(maxy-1)*2]||[]).inject(0,:+)}.inject(0,:+)
     end
 
@@ -142,9 +155,10 @@ module Algorithms
       end
     end
 
-    def euler_histogram
+    def euler_histogram pbar
       (0..stepx*2-2).map do |idxx|
         (0..stepy*2-2).map do |idxy|
+          pbar.inc
           euler_histogram_step(idxx,idxy)
         end
       end

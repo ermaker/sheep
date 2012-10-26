@@ -37,7 +37,7 @@ describe CLI do
       File.stub(:open).with(fixture('3_0.001_histogram.hist'), 'w').and_yield(result)
       memory = 0.001
       method = :histogram
-      described_class.make_hist fixture('3.map'), memory, method
+      described_class.make_hist fixture('3.map'), memory, method, StringIO.new
       result.string.split("\n").reject {|v| v.include? 'sheep: '}.should ==
         File.read(fixture('3_0.001_histogram.hist')).split("\n").reject {|v| v.include? 'sheep: '}
     end
@@ -49,7 +49,7 @@ describe CLI do
       File.stub(:open).with(fixture('3_0.001_simple.hist'), 'w').and_yield(result)
       memory = 0.001
       method = :simple
-      described_class.make_hist fixture('3.map'), memory, method
+      described_class.make_hist fixture('3.map'), memory, method, StringIO.new
       result.string.split("\n").
         reject {|v| v.include? '- *' or v.include? '- &'}.should ==
         File.read(fixture('3_0.001_simple.hist')).split("\n").

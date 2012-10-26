@@ -54,6 +54,7 @@ describe Farm do
           [[4.0,2.0],[5.0,2.0],[5.0,3.0],[4.0,3.0]],
       ])
       subject.set_algorithm Algorithms::Naive
+      subject.data StringIO.new
 
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
       subject.query(4.0, 2.0, 5.0, 3.0).should == 1
@@ -77,6 +78,7 @@ describe Farm do
       ],
       :minx => 0.0, :miny => 0.0, :maxx => 6.0, :maxy => 8.0)
       subject.set_algorithm Algorithms::Histogram, 2, 2
+      subject.data StringIO.new
 
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
       subject.query(4.0, 2.0, 5.0, 3.0).should == 1.0/6.0

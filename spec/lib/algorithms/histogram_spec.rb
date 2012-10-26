@@ -1,5 +1,6 @@
 require 'algorithms/histogram'
 require 'sheep'
+require 'stringio'
 
 describe Algorithms::Histogram do
   subject do
@@ -87,6 +88,10 @@ describe Algorithms::Histogram do
   end
 
   context '#exact_query' do
+    before do
+      subject.data StringIO.new
+    end
+
     it 'works' do
       subject.exact_query(0, 0, 1, 1).should == 1
       subject.exact_query(0, 0, 1, 2).should == 2
@@ -133,6 +138,9 @@ describe Algorithms::Histogram do
   end
 
   context '#query' do
+    before do
+      subject.data StringIO.new
+    end
     it 'works' do
       subject.query(0.0, 0.0, 6.0, 8.0).should == 3
       subject.query(4.0, 2.0, 5.0, 3.0).should == 1.0/6.0
@@ -165,6 +173,8 @@ describe Algorithms::Histogram, 'with special objects' do
 
   context '#query' do
     it 'works' do
+      subject.data StringIO.new
+
       subject.query(4.0, 2.0, 5.0, 3.0).should_not be_nan
       subject.query(4.0, 2.0, 5.0, 3.0).should == 0.0
     end
@@ -233,7 +243,7 @@ describe Algorithms::Histogram do
     it 'works' do
       subject.stepx = 2
       subject.stepy = 2
-      result = subject.euler_histogram
+      result = subject.euler_histogram double(:inc => nil)
       result.should == [
         [1, -1, 2],
         [-1, 1, -1],
@@ -242,7 +252,7 @@ describe Algorithms::Histogram do
 
       subject.stepx = 3
       subject.stepy = 2
-      result = subject.euler_histogram
+      result = subject.euler_histogram double(:inc => nil)
       result.should == [
         [1, -1, 2],
         [-1, 1, -2],
@@ -253,7 +263,7 @@ describe Algorithms::Histogram do
 
       subject.stepx = 3
       subject.stepy = 3
-      result = subject.euler_histogram
+      result = subject.euler_histogram double(:inc => nil)
       result.should == [
         [0, 0, 1, 0, 1],
         [0, 0, -1, 0, -1],
