@@ -295,6 +295,9 @@ describe Algorithms::Histogram do
     @step0s = subject.sheep.objects.zip(@uidxs).map do |object,uidx|
       subject.step0 uidx
     end
+    @polygons = subject.sheep.objects.map do |object|
+      subject.get_polygon object
+    end
   end
 
   context '#get_uidx' do
@@ -322,8 +325,8 @@ describe Algorithms::Histogram do
 
   context '#step1' do
     it 'works' do
-      result = subject.sheep.objects.zip(@step0s, @uidxs).map do |object,step0,uidx|
-        subject.step1 step0, uidx, object
+      result = @polygons.zip(@step0s, @uidxs).map do |polygon,step0,uidx|
+        subject.step1 step0, uidx, polygon
       end
       result.should == [
         [
@@ -352,8 +355,8 @@ describe Algorithms::Histogram do
 
   context '#step2' do
     it 'works' do
-      result = subject.sheep.objects.zip(@step0s, @uidxs).map do |object,step0,uidx|
-        subject.step2 step0, uidx, object
+      result = @polygons.zip(@step0s, @uidxs).map do |polygon,step0,uidx|
+        subject.step2 step0, uidx, polygon
       end
       result.should == [
         [
@@ -382,8 +385,8 @@ describe Algorithms::Histogram do
 
   context '#step3' do
     it 'works' do
-      result = subject.sheep.objects.zip(@step0s, @uidxs).map do |object,step0,uidx|
-        subject.step3 step0, uidx, object
+      result = @polygons.zip(@step0s, @uidxs).map do |polygon,step0,uidx|
+        subject.step3 step0, uidx, polygon
       end
       result.should == [
         [
@@ -412,8 +415,8 @@ describe Algorithms::Histogram do
 
   context '#step4' do
     it 'works' do
-      result = subject.sheep.objects.zip(@step0s, @uidxs).map do |object,step0,uidx|
-        subject.step4 step0, uidx, object
+      result = @polygons.zip(@step0s, @uidxs).map do |polygon,step0,uidx|
+        subject.step4 step0, uidx, polygon
       end
       result.should == [
         [

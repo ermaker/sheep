@@ -164,6 +164,10 @@ module Algorithms
       end
     end
 
+    def get_polygon object
+      Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
+    end
+
     def get_uidx object
       mbr = object.transpose.map(&:minmax).transpose.flatten
       _, uidx, _, _ = bounds(*mbr)
@@ -174,8 +178,7 @@ module Algorithms
       Array.new((uidx[2]-1 - uidx[0])*2 + 1) {Array.new((uidx[3]-1 - uidx[1])*2 + 1) {0}}
     end
 
-    def step1 step0, uidx, object
-      polygon = Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
+    def step1 step0, uidx, polygon
       (uidx[2]-uidx[0]-1).times do |idxx|
         (uidx[3]-uidx[1]-1).times do |idxy|
           if polygon.counting?(
@@ -198,9 +201,7 @@ module Algorithms
       step0
     end
 
-    def step2 step1, uidx, object
-      polygon = Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
-
+    def step2 step1, uidx, polygon
       (uidx[2]-uidx[0]).times do |idxx|
         (uidx[3]-uidx[1]-1).times do |idxy|
           next unless step1[idxx*2][idxy*2+1] == 0
@@ -221,9 +222,7 @@ module Algorithms
       step1
     end
 
-    def step3 step2, uidx, object
-      polygon = Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
-
+    def step3 step2, uidx, polygon
       (uidx[2]-uidx[0]-1).times do |idxx|
         (uidx[3]-uidx[1]).times do |idxy|
           next unless step2[idxx*2+1][idxy*2] == 0
@@ -244,9 +243,7 @@ module Algorithms
       step2
     end
 
-    def step4 step3, uidx, object
-      polygon = Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
-
+    def step4 step3, uidx, polygon
       (uidx[2]-uidx[0]).times do |idxx|
         (uidx[3]-uidx[1]).times do |idxy|
           next unless step3[idxx*2][idxy*2] == 0
