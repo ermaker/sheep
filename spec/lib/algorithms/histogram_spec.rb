@@ -274,3 +274,31 @@ describe Algorithms::Histogram do
     end
   end
 end
+
+describe Algorithms::Histogram do
+  subject do
+    described_class.new(
+      double(
+        :objects => [
+          [[1.0,1.0],[7.0,1.0],[7.0,9.0],[1.0,9.0]],
+          [[3.0,3.0],[7.0,3.0],[7.0,7.0],[3.0,7.0]],
+          [[0.5,0.5],[1.5,0.5],[1.5,1.5],[0.5,1.5]],
+          [[1.0,4.5],[5.0,4.5],[5.0,5.5],[1.0,5.5]],
+    ],
+    :minx => 0.0, :miny => 0.0, :maxx => 8.0, :maxy => 10.0), 5, 4)
+  end
+
+  context '#get_uidx' do
+    it 'works' do
+      uidxs = subject.sheep.objects.map do |object|
+        subject.get_uidx object
+      end
+      uidxs.should == [
+        [0, 0, 5, 4],
+        [1, 1, 4, 4],
+        [0, 0, 1, 1],
+        [2, 0, 3, 3],
+      ]
+    end
+  end
+end

@@ -164,6 +164,12 @@ module Algorithms
       end
     end
 
+    def get_uidx object
+      mbr = object.transpose.map(&:minmax).transpose.flatten
+      _, uidx, _, _ = bounds(*mbr)
+      return uidx
+    end
+
     def capture_size
       (stepx+1) * (stepy+1)
     end
