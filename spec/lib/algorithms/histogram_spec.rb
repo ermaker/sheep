@@ -292,6 +292,9 @@ describe Algorithms::Histogram do
     @uidxs = subject.sheep.objects.map do |object|
       subject.get_uidx object
     end
+    @step0s = subject.sheep.objects.zip(@uidxs).map do |object,uidx|
+      subject.step0 uidx
+    end
   end
 
   context '#get_uidx' do
@@ -307,15 +310,42 @@ describe Algorithms::Histogram do
 
   context '#step0' do
     it 'works' do
-      result = subject.sheep.objects.zip(@uidxs).map do |object,uidx|
-        subject.step0 uidx
-      end
-      result.map! {|r| [(r[0]||[]).size, r.size]}
+      result = @step0s.map {|r| [r.size, (r[0]||[]).size]}
       result.should == [
         [9, 7],
         [5, 5],
         [1, 1],
         [1, 5],
+      ]
+    end
+  end
+
+  context '#step1' do
+    it 'works' do
+      result = subject.sheep.objects.zip(@step0s, @uidxs).map do |object,step0,uidx|
+        subject.step1 step0, uidx, object
+      end
+      result.should == [
+        [
+          [ 1, -1,  1, -1,  1, -1,  1],
+          [-1,  1, -1,  1, -1,  1, -1],
+          [ 1, -1,  1, -1,  1, -1,  1],
+          [-1,  1, -1,  1, -1,  1, -1],
+          [ 1, -1,  1, -1,  1, -1,  1],
+          [-1,  1, -1,  1, -1,  1, -1],
+          [ 1, -1,  1, -1,  1, -1,  1],
+          [-1,  1, -1,  1, -1,  1, -1],
+          [ 1, -1,  1, -1,  1, -1,  1]
+        ],
+        [
+          [ 1, -1,  1, -1,  1],
+          [-1,  1, -1,  1, -1],
+          [ 1, -1,  1, -1,  1],
+          [-1,  1, -1,  1, -1],
+          [ 1, -1,  1, -1,  1]
+        ],
+        [[0]],
+        [[0, 0, 0, 0, 0]],
       ]
     end
   end

@@ -171,7 +171,31 @@ module Algorithms
     end
 
     def step0 uidx
-      Array.new((uidx[3]-1 - uidx[1])*2 + 1) {Array.new((uidx[2]-1 - uidx[0])*2 + 1) {0}}
+      Array.new((uidx[2]-1 - uidx[0])*2 + 1) {Array.new((uidx[3]-1 - uidx[1])*2 + 1) {0}}
+    end
+
+    def step1 step0, uidx, object
+      polygon = Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
+      (uidx[2]-uidx[0]-1).times do |idxx|
+        (uidx[3]-uidx[1]-1).times do |idxy|
+          if polygon.counting?(
+            Point(minx + (uidx[0] + idxy+1)*(maxx-minx)/stepy,
+                  miny + (uidx[1] + idxx+1)*(maxy-miny)/stepx))
+            step0[idxx*2+1][idxy*2+1] = 1
+
+            step0[idxx*2][idxy*2+1] = -1
+            step0[idxx*2+1][idxy*2] = -1
+            step0[idxx*2+1][idxy*2+2] = -1
+            step0[idxx*2+2][idxy*2+1] = -1
+
+            step0[idxx*2][idxy*2] = 1
+            step0[idxx*2][idxy*2+2] = 1
+            step0[idxx*2+2][idxy*2] = 1
+            step0[idxx*2+2][idxy*2+2] = 1
+          end
+        end
+      end
+      step0
     end
 
     def capture_size
