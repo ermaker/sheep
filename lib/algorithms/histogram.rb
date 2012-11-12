@@ -174,6 +174,10 @@ module Algorithms
       return uidx
     end
 
+    def get_result
+      Array.new(stepx*2 - 1) {Array.new(stepy*2 - 1) {0}}
+    end
+
     def step0 uidx
       Array.new((uidx[2]-1 - uidx[0])*2 + 1) {Array.new((uidx[3]-1 - uidx[1])*2 + 1) {0}}
     end
@@ -263,6 +267,15 @@ module Algorithms
         end
       end
       step3
+    end
+
+    def step5 result, step4, uidx
+      ((uidx[2]-uidx[0])*2-1).times do |idxx|
+        ((uidx[3]-uidx[1])*2-1).times do |idxy|
+          result[uidx[0]*2 + idxx][uidx[1]*2 + idxy] += step4[idxx][idxy]
+        end
+      end
+      result
     end
 
     def capture_size
