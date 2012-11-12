@@ -46,14 +46,19 @@ class CLI
     end
 
     def make_hist map, memory, method, io=$stderr
+      $logger.debug('CLI.make_hist') {'start'}
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
+      $logger.debug('CLI.make_hist') {'set_algorithm'}
       farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024*1024
+      $logger.debug('CLI.make_hist') {'data'}
       farm.data io
+      $logger.debug('CLI.make_hist') {'file write'}
       File.open(filename_hist(map, memory, method), 'w') do |f|
         f << farm.to_yaml
       end
+      $logger.debug('CLI.make_hist') {'end'}
     end
 
     def filename_sel query
