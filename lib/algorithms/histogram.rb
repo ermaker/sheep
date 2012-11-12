@@ -203,7 +203,7 @@ module Algorithms
 
       (uidx[2]-uidx[0]).times do |idxx|
         (uidx[3]-uidx[1]-1).times do |idxy|
-          next if step1[idxx*2][idxy*2+1] == -1
+          next unless step1[idxx*2][idxy*2+1] == 0
           if polygon.counting?(
             Segment(
               Point(minx + (uidx[1]+idxy+1)*(maxx-minx)/stepy,
@@ -226,7 +226,7 @@ module Algorithms
 
       (uidx[2]-uidx[0]-1).times do |idxx|
         (uidx[3]-uidx[1]).times do |idxy|
-          next if step2[idxx*2+1][idxy*2] == -1
+          next unless step2[idxx*2+1][idxy*2] == 0
           if polygon.counting?(
             Segment(
               Point(minx + (uidx[1]+idxy)*(maxx-minx)/stepy,
