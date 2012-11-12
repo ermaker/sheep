@@ -170,6 +170,10 @@ module Algorithms
       return uidx
     end
 
+    def step0 uidx
+      Array.new((uidx[3]-1 - uidx[1])*2 + 1) {Array.new((uidx[2]-1 - uidx[0])*2 + 1) {0}}
+    end
+
     def capture_size
       (stepx+1) * (stepy+1)
     end

@@ -288,16 +288,34 @@ describe Algorithms::Histogram do
     :minx => 0.0, :miny => 0.0, :maxx => 8.0, :maxy => 10.0), 5, 4)
   end
 
+  before do
+    @uidxs = subject.sheep.objects.map do |object|
+      subject.get_uidx object
+    end
+  end
+
   context '#get_uidx' do
     it 'works' do
-      uidxs = subject.sheep.objects.map do |object|
-        subject.get_uidx object
-      end
-      uidxs.should == [
+      @uidxs.should == [
         [0, 0, 5, 4],
         [1, 1, 4, 4],
         [0, 0, 1, 1],
         [2, 0, 3, 3],
+      ]
+    end
+  end
+
+  context '#step0' do
+    it 'works' do
+      result = subject.sheep.objects.zip(@uidxs).map do |object,uidx|
+        subject.step0 uidx
+      end
+      result.map! {|r| [(r[0]||[]).size, r.size]}
+      result.should == [
+        [9, 7],
+        [5, 5],
+        [1, 1],
+        [1, 5],
       ]
     end
   end
