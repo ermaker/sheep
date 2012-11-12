@@ -349,4 +349,35 @@ describe Algorithms::Histogram do
       ]
     end
   end
+
+  context '#step2' do
+    it 'works' do
+      result = subject.sheep.objects.zip(@step0s, @uidxs).map do |object,step0,uidx|
+        subject.step2 step0, uidx, object
+      end
+      result.should == [
+        [
+          [1, -1, 1, -1, 1, -1, 1],
+          [0, 0, 0, 0, 0, 0, 0],
+          [1, -1, 1, -1, 1, -1, 1],
+          [0, 0, 0, 0, 0, 0, 0],
+          [1, -1, 1, -1, 1, -1, 1],
+          [0, 0, 0, 0, 0, 0, 0],
+          [1, -1, 1, -1, 1, -1, 1],
+          [0, 0, 0, 0, 0, 0, 0],
+          [1, -1, 1, -1, 1, -1, 1]
+        ],
+        [
+          [1, -1, 1, -1, 1],
+          [0, 0, 0, 0, 0],
+          [1, -1, 1, -1, 1],
+          [0, 0, 0, 0, 0],
+          [1, -1, 1, -1, 1]
+        ],
+        [[0]],
+        [[1, -1, 1, -1, 1]],
+      ]
+
+    end
+  end
 end
