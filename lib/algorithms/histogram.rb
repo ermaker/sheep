@@ -179,8 +179,8 @@ module Algorithms
       (uidx[2]-uidx[0]-1).times do |idxx|
         (uidx[3]-uidx[1]-1).times do |idxy|
           if polygon.counting?(
-            Point(minx + (uidx[0] + idxy+1)*(maxx-minx)/stepy,
-                  miny + (uidx[1] + idxx+1)*(maxy-miny)/stepx))
+            Point(minx + (uidx[1] + idxy+1)*(maxx-minx)/stepy,
+                  miny + (uidx[0] + idxx+1)*(maxy-miny)/stepx))
             step0[idxx*2+1][idxy*2+1] = 1
 
             step0[idxx*2][idxy*2+1] = -1
