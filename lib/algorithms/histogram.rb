@@ -284,20 +284,32 @@ module Algorithms
     end
 
     def histogram pbar
+      $logger.debug('Algorithms::Histogram#histogram') {'start'}
+      $logger.debug('Algorithms::Histogram#histogram') {'get_result'}
       result = get_result
+      $logger.debug('Algorithms::Histogram#histogram') {'each object'}
       sheep.objects.each do |object|
+        $logger.debug('Algorithms::Histogram#histogram') {'polygon'}
         polygon = get_polygon object
+        $logger.debug('Algorithms::Histogram#histogram') {'uidx'}
         uidx = get_uidx object
+        $logger.debug('Algorithms::Histogram#histogram') {'step0'}
         local = step0 uidx
 
+        $logger.debug('Algorithms::Histogram#histogram') {'step1'}
         step1 local, uidx, polygon
+        $logger.debug('Algorithms::Histogram#histogram') {'step2'}
         step2 local, uidx, polygon
+        $logger.debug('Algorithms::Histogram#histogram') {'step3'}
         step3 local, uidx, polygon
+        $logger.debug('Algorithms::Histogram#histogram') {'step4'}
         step4 local, uidx, polygon
+        $logger.debug('Algorithms::Histogram#histogram') {'step5'}
         step5 result, local, uidx
 
         pbar.inc
       end
+      $logger.debug('Algorithms::Histogram#histogram') {'end'}
       result
     end
 
