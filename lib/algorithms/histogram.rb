@@ -16,7 +16,8 @@ module Algorithms
     end
 
     def _data pbar
-      @data ||= euler_histogram(pbar)
+      #@data ||= euler_histogram(pbar)
+      @data ||= histogram(pbar)
     end
 
     def initialize sheep, *args
