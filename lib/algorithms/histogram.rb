@@ -221,6 +221,29 @@ module Algorithms
       step1
     end
 
+    def step3 step2, uidx, object
+      polygon = Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
+
+      (uidx[2]-uidx[0]-1).times do |idxx|
+        (uidx[3]-uidx[1]).times do |idxy|
+          next if step2[idxx*2+1][idxy*2] == -1
+          if polygon.counting?(
+            Segment(
+              Point(minx + (uidx[1]+idxy)*(maxx-minx)/stepy,
+                    miny + (uidx[0]+idxx+1)*(maxy-miny)/stepx),
+              Point(minx + (uidx[1]+idxy+1)*(maxx-minx)/stepy,
+                    miny + (uidx[0]+idxx+1)*(maxy-miny)/stepx)
+          ))
+            step2[idxx*2+1][idxy*2] = -1
+
+            step2[idxx*2][idxy*2] = 1
+            step2[idxx*2+2][idxy*2] = 1
+          end
+        end
+      end
+      step2
+    end
+
     def capture_size
       (stepx+1) * (stepy+1)
     end
