@@ -6,7 +6,7 @@ module Algorithms
     attr_accessor :sheep, :data, :minx, :miny, :maxx, :maxy, :stepx, :stepy
 
     def data_size
-      (stepx*2-1) * (stepy*2-1)
+      sheep.objects.size
     end
 
     def data io=$stderr
@@ -170,7 +170,7 @@ module Algorithms
     end
 
     def get_polygon object
-      Polygon(object.map{|p|Geometry::Point.new_by_array(p)})
+      Polygon(object.uniq.map{|p|Geometry::Point.new_by_array(p)})
     end
 
     def get_uidx object
@@ -190,9 +190,18 @@ module Algorithms
     def step1 step0, uidx, polygon
       (uidx[2]-uidx[0]-1).times do |idxx|
         (uidx[3]-uidx[1]-1).times do |idxy|
+          $logger.debug('Algorithms::Histogram#step1') do
+            'idxx: %d, idxy: %d' % [idxx, idxy]
+          end
+          $logger.debug('Algorithms::Histogram#step1') do
+            'point x: %f, y: %f' % [
+              minx + (uidx[1] + idxy+1)*(maxx-minx)/stepy,
+              miny + (uidx[0] + idxx+1)*(maxy-miny)/stepx]
+          end
           if polygon.counting?(
             Point(minx + (uidx[1] + idxy+1)*(maxx-minx)/stepy,
                   miny + (uidx[0] + idxx+1)*(maxy-miny)/stepx))
+            $logger.debug('Algorithms::Histogram#step1') {'inside of the if statement'}
             step0[idxx*2+1][idxy*2+1] = 1
 
             step0[idxx*2][idxy*2+1] = -1
@@ -289,12 +298,22 @@ module Algorithms
       result = get_result
       $logger.debug('Algorithms::Histogram#histogram') {'each object'}
       sheep.objects.each do |object|
+        $logger.debug('Algorithms::Histogram#histogram') do
+          'with object %s' % object.to_s
+        end
         $logger.debug('Algorithms::Histogram#histogram') {'polygon'}
         polygon = get_polygon object
         $logger.debug('Algorithms::Histogram#histogram') {'uidx'}
         uidx = get_uidx object
+        $logger.debug('Algorithms::Histogram#histogram') do
+          'uidx: %s' % uidx.to_s
+        end
+
         $logger.debug('Algorithms::Histogram#histogram') {'step0'}
         local = step0 uidx
+        $logger.debug('Algorithms::Histogram#histogram') do
+          'local: %s' % local.to_s
+        end
 
         $logger.debug('Algorithms::Histogram#histogram') {'step1'}
         step1 local, uidx, polygon
