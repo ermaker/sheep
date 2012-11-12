@@ -498,4 +498,20 @@ describe Algorithms::Histogram do
       ]
     end
   end
+
+  context '#histogram' do
+    it 'works' do
+      subject.histogram(double(:inc => nil)).should == [
+        [2, -1, 1, -1, 1, -1, 1],
+        [-1, 1, -1, 1, -1, 1, -1],
+        [1, -1, 2, -2, 2, -2, 2],
+        [-1, 1, -2, 2, -2, 2, -2],
+        [2, -2, 3, -3, 3, -2, 2],
+        [-1, 1, -2, 2, -2, 2, -2],
+        [1, -1, 2, -2, 2, -2, 2],
+        [-1, 1, -1, 1, -1, 1, -1],
+        [1, -1, 1, -1, 1, -1, 1]
+      ]
+    end
+  end
 end

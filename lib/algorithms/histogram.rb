@@ -278,6 +278,24 @@ module Algorithms
       result
     end
 
+    def histogram pbar
+      result = get_result
+      sheep.objects.each do |object|
+        polygon = get_polygon object
+        uidx = get_uidx object
+        local = step0 uidx
+
+        step1 local, uidx, polygon
+        step2 local, uidx, polygon
+        step3 local, uidx, polygon
+        step4 local, uidx, polygon
+        step5 result, local, uidx
+
+        pbar.inc
+      end
+      result
+    end
+
     def capture_size
       (stepx+1) * (stepy+1)
     end
