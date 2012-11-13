@@ -78,7 +78,7 @@ describe CLI do
       File.stub(:open).with(fixture('3_10_0.01_random.query'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3_10_0.01_random.query'))))
       File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'w').and_yield(result)
-      described_class.make_est fixture('3_0.001_histogram.hist'), fixture('3_10_0.01_random.query')
+      described_class.make_est fixture('3_0.001_histogram.hist'), fixture('3_10_0.01_random.query'), StringIO.new
       result.string.should ==
         File.read(fixture('3_0.001_histogram_10_0.01_random.est'))
     end

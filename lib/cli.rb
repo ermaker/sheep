@@ -100,13 +100,24 @@ class CLI
       File.join(dirname, "#{basename}_#{query_basename.split('_')[1..-1].join('_')}.est")
     end
 
-    def make_est hist, query
+    def make_est hist, query, io=$stderr
+      $logger.debug('CLI.make_est') {'start'}
+      $logger.debug('CLI.make_est') {'load farm'}
       farm = YAML.load(File.read(hist))
+      $logger.debug('CLI.make_est') {'load query'}
       queries = Query.load query
-      est = queries.map {|query| farm.query(*query)}
+      pbar = ProgressBar.new('Get result', queries.size, io)
+      $logger.debug('CLI.make_est') {'each query'}
+      est = queries.map do |query|
+        pbar.inc
+        farm.query(*query)
+      end
+      pbar.finish
+      $logger.debug('CLI.make_est') {'file write'}
       File.open(filename_est(hist, query), 'w') do |f|
         f<< est.to_yaml
       end
+      $logger.debug('CLI.make_est') {'end'}
     end
 
     def filename_err est, measure
