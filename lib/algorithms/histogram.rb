@@ -46,31 +46,40 @@ module Algorithms
     end
 
     def bounds qminx, qminy, qmaxx, qmaxy
-      lminx = (miny..maxy).
-        step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qminy}.min
-      lminx = [maxy, stepx] unless lminx
-      lminy = (minx..maxx).
-        step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qminx}.min
-      lminy = [maxx, stepy] unless lminy
-      lmaxx = (miny..maxy).
-        step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qmaxy}.max
-      lmaxx = [miny, 0] unless lmaxx
-      lmaxy = (minx..maxx).
-        step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qmaxx}.max
-      lmaxy = [minx, 0] unless lmaxy
 
-      uminx = (miny..maxy).
-        step((maxy-miny)/stepx).map.with_index.select {|y,| y<=qminy}.max
-      uminx = [miny, 0] unless uminx
-      uminy = (minx..maxx).
-        step((maxx-minx)/stepy).map.with_index.select {|x,| x<=qminx}.max
-      uminy = [minx, 0] unless uminy
-      umaxx = (miny..maxy).
-        step((maxy-miny)/stepx).map.with_index.select {|y,| y>=qmaxy}.min
-      umaxx = [maxy, stepx] unless umaxx
-      umaxy = (minx..maxx).
-        step((maxx-minx)/stepy).map.with_index.select {|x,| x>=qmaxx}.min
-      umaxy = [maxx, stepy] unless umaxy
+      lidxx = ((qminy-miny)/(maxy-miny)*stepx).ceil
+      lidxx = stepx if lidxx > stepx
+      lidxx = 0 if lidxx < 0
+      lminx = [miny+lidxx*(maxy-miny)/stepx, lidxx]
+      lidxy = ((qminx-minx)/(maxx-minx)*stepy).ceil
+      lidxy = stepy if lidxy > stepy
+      lidxy = 0 if lidxy < 0
+      lminy = [minx+lidxy*(maxx-minx)/stepy, lidxy]
+      lidxx = ((qmaxy-miny)/(maxy-miny)*stepx).floor
+      lidxx = stepx if lidxx > stepx
+      lidxx = 0 if lidxx < 0
+      lmaxx = [miny+lidxx*(maxy-miny)/stepx, lidxx]
+      lidxy = ((qmaxx-minx)/(maxx-minx)*stepy).floor
+      lidxy = stepy if lidxy > stepy
+      lidxy = 0 if lidxy < 0
+      lmaxy = [minx+lidxy*(maxx-minx)/stepy, lidxy]
+
+      uidxx = ((qminy-miny)/(maxy-miny)*stepx).floor
+      uidxx = stepx if uidxx > stepx
+      uidxx = 0 if uidxx < 0
+      uminx = [miny+uidxx*(maxy-miny)/stepx, uidxx]
+      uidxy = ((qminx-minx)/(maxx-minx)*stepy).floor
+      uidxy = stepy if uidxy > stepy
+      uidxy = 0 if uidxy < 0
+      uminy = [minx+uidxy*(maxx-minx)/stepy, uidxy]
+      uidxx = ((qmaxy-miny)/(maxy-miny)*stepx).ceil
+      uidxx = stepx if uidxx > stepx
+      uidxx = 0 if uidxx < 0
+      umaxx = [miny+uidxx*(maxy-miny)/stepx, uidxx]
+      uidxy = ((qmaxx-minx)/(maxx-minx)*stepy).ceil
+      uidxy = stepy if uidxy > stepy
+      uidxy = 0 if uidxy < 0
+      umaxy = [minx+uidxy*(maxx-minx)/stepy, uidxy]
 
       return [
         [lminx, lminy, lmaxx, lmaxy].map{|v|v[1]},
