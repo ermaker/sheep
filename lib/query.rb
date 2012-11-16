@@ -16,15 +16,27 @@ class Query
     end
 
     def save filename, queries
-      $logger.debug('Query.save') {'begin'}
       File.open(filename, 'w') do |f|
-        f << queries.to_yaml
+        queries.each do |query|
+          f.puts query.join(' ')
+        end
       end
-      $logger.debug('Query.save') {'end'}
     end
 
     def load filename
-      YAML.load(File.read(filename))
+      File.open(filename) do |f|
+        f.rewind
+        f.each_line.map do |line|
+          yield line.split(' ').map(&:to_f)
+        end
+      end
+    end
+
+    def size filename
+      File.open(filename) do |f|
+        f.rewind
+        f.each_line.inject(0) {|c,l| c+1}
+      end
     end
   end
 end

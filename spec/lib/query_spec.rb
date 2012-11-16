@@ -25,33 +25,26 @@ describe Query do
     end
   end
 
-  context '.save' do
-    it 'works' do
-      sheep = Sheep.new
-      sheep.load fixture('3.map')
-      area = 0.01
-      queries = 100.times.map { Query.generate sheep, area }
+  it 'works' do
+    sheep = Sheep.new
+    sheep.load fixture('3.map')
+    area = 0.01
+    queries = 100.times.map { Query.generate sheep, area }
 
-      result = StringIO.new
-      File.stub(:open).and_yield(result)
+    file_io = StringIO.new
+    File.stub(:open).and_yield(file_io)
+    File.stub(:read).and_return(file_io.string)
 
-      filename = tmp('3.query')
-      Query.save filename, queries
-      YAML.load(result.string).should == queries
-    end
-  end
+    filename = tmp('3.query')
+    file_io.rewind
+    Query.save filename, queries
 
-  context '.load' do
-    it 'works' do
-      sheep = Sheep.new
-      sheep.load fixture('3.map')
-      area = 0.01
-      queries = 100.times.map { Query.generate sheep, area }
+    file_io.rewind
+    result = Query.size(filename)
+    result.should == 100
 
-      File.stub(:read).and_return(StringIO.new(queries.to_yaml))
-      filename = tmp('3.query')
-      result = Query.load filename
-      result.should == queries
-    end
+    file_io.rewind
+    result = Query.load(filename) {|query| query}
+    result.should == queries
   end
 end

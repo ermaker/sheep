@@ -77,11 +77,9 @@ class CLI
       farm.sheep.load map
       $logger.debug('CLI.make_sel') {'set_algorithm'}
       farm.set_algorithm Algorithms::NaiveWithKdtree
-      $logger.debug('CLI.make_sel') {'load query'}
-      queries = Query.load query
       $logger.debug('CLI.make_sel') {'query start'}
-      pbar = ProgressBar.new('Get result', queries.size, io)
-      sel = queries.map do |query|
+      pbar = ProgressBar.new('Get result', Query.size(query), io)
+      sel = Query.load(query) do |query|
         pbar.inc
         farm.query(*query)
       end
@@ -104,11 +102,9 @@ class CLI
       $logger.debug('CLI.make_est') {'start'}
       $logger.debug('CLI.make_est') {'load farm'}
       farm = YAML.load(File.read(hist))
-      $logger.debug('CLI.make_est') {'load query'}
-      queries = Query.load query
-      pbar = ProgressBar.new('Get result', queries.size, io)
+      pbar = ProgressBar.new('Get result', Query.size(query), io)
       $logger.debug('CLI.make_est') {'each query'}
-      est = queries.map do |query|
+      est = Query.load(query) do |query|
         pbar.inc
         farm.query(*query)
       end

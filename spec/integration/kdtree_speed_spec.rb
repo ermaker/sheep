@@ -10,7 +10,7 @@ describe 'Kdtree speed' do
     @farm.sheep = Sheep.new
     @farm.sheep.load fixture('Nanaimo.map')
     @farm.set_algorithm Algorithms::NaiveWithKdtree
-    @queries = Query.load fixture('Nanaimo_20_0.1_random.query')
+    @queries = Query.load(fixture('Nanaimo_20_0.1_random.query')){|q|q}
     @node = @farm.instance_variable_get(:@algorithm).
       instance_variable_get(:@kdtree)
   end
