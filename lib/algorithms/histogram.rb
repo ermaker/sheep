@@ -40,9 +40,6 @@ module Algorithms
       @maxy = sheep.maxy
       @stepx = stepx
       @stepy = stepy
-      $logger.debug('Algorithms::Histogram#initialize') do
-        'minx: %f, miny: %f, maxx: %f, maxy: %f, stepx: %d, stepy: %d' % [minx, miny, maxx, maxy, stepx, stepy]
-      end
     end
 
     def bounds qminx, qminy, qmaxx, qmaxy
