@@ -28,16 +28,16 @@ class CLI
     end
 
     def make_query map, number, area, dist
-      $logger.debug('CLI.make_query') {'new & load map'}
+      $logger.info('CLI.make_query') {'new & load map'}
       sheep = Sheep.new
       sheep.load map
-      $logger.debug('CLI.make_query') {'Query.generate'}
+      $logger.info('CLI.make_query') {'Query.generate'}
       queries = number.times.map do
         Query.generate sheep, area
       end
-      $logger.debug('CLI.make_query') {'Query.save'}
+      $logger.info('CLI.make_query') {'Query.save'}
       Query.save filename_query(map, number, area, dist), queries
-      $logger.debug('CLI.make_query') {'end'}
+      $logger.info('CLI.make_query') {'end'}
     end
 
     def filename_hist map, memory, method
@@ -47,24 +47,24 @@ class CLI
     end
 
     def make_hist map, memory, method, io=$stderr
-      $logger.debug('CLI.make_hist') {'start'}
+      $logger.info('CLI.make_hist') {'start'}
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
-      $logger.debug('CLI.make_hist') {'set_algorithm'}
+      $logger.info('CLI.make_hist') {'set_algorithm'}
       farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024
-      $logger.debug('CLI.make_hist') {'data'}
+      $logger.info('CLI.make_hist') {'data'}
       farm.data io
-      $logger.debug('CLI.make_hist') {'remove sheeps'}
+      $logger.info('CLI.make_hist') {'remove sheeps'}
       farm.sheep = nil
       algorithm = farm.instance_eval('@algorithm')
       algorithm.sheep=nil if algorithm.respond_to? :sheep
       algorithm.histograms.each{|h|h.sheep=nil} if algorithm.respond_to? :histograms
-      $logger.debug('CLI.make_hist') {'file write'}
+      $logger.info('CLI.make_hist') {'file write'}
       File.open(filename_hist(map, memory, method), 'w') do |f|
         f << farm.to_yaml
       end
-      $logger.debug('CLI.make_hist') {'end'}
+      $logger.info('CLI.make_hist') {'end'}
     end
 
     def filename_sel query
@@ -81,20 +81,20 @@ class CLI
       farm = Farm.new
       farm.sheep = Sheep.new
       farm.sheep.load map
-      $logger.debug('CLI.make_sel') {'set_algorithm'}
+      $logger.info('CLI.make_sel') {'set_algorithm'}
       farm.set_algorithm Algorithms::NaiveWithKdtree
-      $logger.debug('CLI.make_sel') {'query start'}
+      $logger.info('CLI.make_sel') {'query start'}
       pbar = ProgressBar.new('Get result', Query.size(query), io)
       sel = Query.load(query) do |query|
         pbar.inc
         farm.query(*query)
       end
       pbar.finish
-      $logger.debug('CLI.make_sel') {'file write'}
+      $logger.info('CLI.make_sel') {'file write'}
       File.open(filename_sel(query), 'w') do |f|
         f<< sel.to_yaml
       end
-      $logger.debug('CLI.make_sel') {'end'}
+      $logger.info('CLI.make_sel') {'end'}
     end
 
     def filename_est hist, query
@@ -105,21 +105,21 @@ class CLI
     end
 
     def make_est hist, query, io=$stderr
-      $logger.debug('CLI.make_est') {'start'}
-      $logger.debug('CLI.make_est') {'load farm'}
+      $logger.info('CLI.make_est') {'start'}
+      $logger.info('CLI.make_est') {'load farm'}
       farm = YAML.load(File.read(hist))
       pbar = ProgressBar.new('Get result', Query.size(query), io)
-      $logger.debug('CLI.make_est') {'each query'}
+      $logger.info('CLI.make_est') {'each query'}
       est = Query.load(query) do |query|
         pbar.inc
         farm.query(*query)
       end
       pbar.finish
-      $logger.debug('CLI.make_est') {'file write'}
+      $logger.info('CLI.make_est') {'file write'}
       File.open(filename_est(hist, query), 'w') do |f|
         f<< est.to_yaml
       end
-      $logger.debug('CLI.make_est') {'end'}
+      $logger.info('CLI.make_est') {'end'}
     end
 
     def filename_err est, measure
