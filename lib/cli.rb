@@ -5,6 +5,7 @@ require 'query'
 require 'algorithms/naive_with_kdtree'
 require 'algorithms/histogram'
 require 'algorithms/simple'
+require 'algorithms/multi'
 require 'yaml'
 require 'stringio'
 
