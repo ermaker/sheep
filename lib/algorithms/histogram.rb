@@ -98,11 +98,11 @@ module Algorithms
     end
 
     def query qminx, qminy, qmaxx, qmaxy
-      return 0.0 if sheep.objects.empty?
-      qminx = minx if qminx < minx
-      qminy = miny if qminy < miny
-      qmaxx = maxx if qmaxx > maxx
-      qmaxy = maxy if qmaxy > maxy
+      return 0.0 unless @minx and @miny and @maxx and @maxy
+      qminx = @minx if qminx < @minx
+      qminy = @miny if qminy < @miny
+      qmaxx = @maxx if qmaxx > @maxx
+      qmaxy = @maxy if qmaxy > @maxy
       lidx, uidx, lbound, ubound = bounds(qminx, qminy, qmaxx, qmaxy)
       lower = exact_query(*lidx)
       upper = exact_query(*uidx)
