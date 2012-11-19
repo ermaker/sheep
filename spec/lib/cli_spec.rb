@@ -34,25 +34,25 @@ describe CLI do
       result = StringIO.new
       File.stub(:open).with(fixture('3.map'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3.map'))))
-      File.stub(:open).with(fixture('3_0.001_histogram.hist'), 'w').and_yield(result)
-      memory = 0.001
+      File.stub(:open).with(fixture('3_16_histogram.hist'), 'w').and_yield(result)
+      memory = 16
       method = :histogram
       described_class.make_hist fixture('3.map'), memory, method, StringIO.new
       result.string.split("\n").reject {|v| v.include? 'sheep: '}.should ==
-        File.read(fixture('3_0.001_histogram.hist')).split("\n").reject {|v| v.include? 'sheep: '}
+        File.read(fixture('3_16_histogram.hist')).split("\n").reject {|v| v.include? 'sheep: '}
     end
 
     it 'works with :simple' do
       result = StringIO.new
       File.stub(:open).with(fixture('3.map'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3.map'))))
-      File.stub(:open).with(fixture('3_0.001_simple.hist'), 'w').and_yield(result)
-      memory = 0.001
+      File.stub(:open).with(fixture('3_16_simple.hist'), 'w').and_yield(result)
+      memory = 16
       method = :simple
       described_class.make_hist fixture('3.map'), memory, method, StringIO.new
       result.string.split("\n").
         reject {|v| v.include? '- *' or v.include? '- &'}.should ==
-        File.read(fixture('3_0.001_simple.hist')).split("\n").
+        File.read(fixture('3_16_simple.hist')).split("\n").
         reject {|v| v.include? '- *' or v.include? '- &'}
     end
   end
@@ -73,40 +73,40 @@ describe CLI do
   context '.make_est' do
     it 'works' do
       result = StringIO.new
-      File.stub(:open).with(fixture('3_0.001_histogram.hist'), 'rt').and_yield(
-        StringIO.new(File.read(fixture('3_0.001_histogram.hist'))))
+      File.stub(:open).with(fixture('3_16_histogram.hist'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_16_histogram.hist'))))
       File.stub(:open).with(fixture('3_10_0.01_random.query')).and_yield(
         StringIO.new(File.read(fixture('3_10_0.01_random.query'))))
-      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'w').and_yield(result)
-      described_class.make_est fixture('3_0.001_histogram.hist'), fixture('3_10_0.01_random.query'), StringIO.new
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random.est'), 'w').and_yield(result)
+      described_class.make_est fixture('3_16_histogram.hist'), fixture('3_10_0.01_random.query'), StringIO.new
       result.string.should ==
-        File.read(fixture('3_0.001_histogram_10_0.01_random.est'))
+        File.read(fixture('3_16_histogram_10_0.01_random.est'))
     end
   end
 
   context '.make_err' do
     it 'works on absolute' do
       result = StringIO.new
-      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'rt').and_yield(
-        StringIO.new(File.read(fixture('3_0.001_histogram_10_0.01_random.est'))))
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random.est'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_16_histogram_10_0.01_random.est'))))
       File.stub(:open).with(fixture('3_10_0.01_random.sel'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3_10_0.01_random.sel'))))
-      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random_absolute.err'), 'w').and_yield(result)
-      described_class.make_err fixture('3_0.001_histogram_10_0.01_random.est'), :absolute
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random_absolute.err'), 'w').and_yield(result)
+      described_class.make_err fixture('3_16_histogram_10_0.01_random.est'), :absolute
       result.string.should ==
-        File.read(fixture('3_0.001_histogram_10_0.01_random_absolute.err'))
+        File.read(fixture('3_16_histogram_10_0.01_random_absolute.err'))
     end
 
     it 'works on relative' do
       result = StringIO.new
-      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random.est'), 'rt').and_yield(
-        StringIO.new(File.read(fixture('3_0.001_histogram_10_0.01_random.est'))))
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random.est'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_16_histogram_10_0.01_random.est'))))
       File.stub(:open).with(fixture('3_10_0.01_random.sel'), 'rt').and_yield(
         StringIO.new(File.read(fixture('3_10_0.01_random.sel'))))
-      File.stub(:open).with(fixture('3_0.001_histogram_10_0.01_random_relative.err'), 'w').and_yield(result)
-      described_class.make_err fixture('3_0.001_histogram_10_0.01_random.est'), :relative
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random_relative.err'), 'w').and_yield(result)
+      described_class.make_err fixture('3_16_histogram_10_0.01_random.est'), :relative
       result.string.should ==
-        File.read(fixture('3_0.001_histogram_10_0.01_random_relative.err'))
+        File.read(fixture('3_16_histogram_10_0.01_random_relative.err'))
     end
   end
 
@@ -116,7 +116,7 @@ describe CLI do
       File.stub(:open).with('Makefile', 'w').and_yield(result)
       data = [fixture('3.data')]
       number = [100]
-      memory = [0.001, 0.005, 0.01]
+      memory = [4, 8, 16]
       method = [:histogram, :simple]
       area = [0.01, 0.05, 0.1]
       dist = [:random]

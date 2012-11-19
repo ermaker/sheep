@@ -55,6 +55,11 @@ class CLI
       farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024
       $logger.debug('CLI.make_hist') {'data'}
       farm.data io
+      $logger.debug('CLI.make_hist') {'remove sheeps'}
+      farm.sheep = nil
+      algorithm = farm.instance_eval('@algorithm')
+      algorithm.sheep=nil if algorithm.respond_to? :sheep
+      algorithm.histograms.each{|h|h.sheep=nil} if algorithm.respond_to? :histograms
       $logger.debug('CLI.make_hist') {'file write'}
       File.open(filename_hist(map, memory, method), 'w') do |f|
         f << farm.to_yaml
