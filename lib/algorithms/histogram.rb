@@ -374,6 +374,13 @@ module Algorithms
         gc.line(minx*scale, y*scale, maxx*scale, y*scale)
         pbar.inc
       end
+
+      gc.stroke('#001aff')
+      gc.stroke_width(scale/5000)
+      gc.line(minx*scale, miny*scale, minx*scale, maxy*scale)
+      gc.line(maxx*scale, miny*scale, maxx*scale, maxy*scale)
+      gc.line(minx*scale, miny*scale, maxx*scale, miny*scale)
+      gc.line(minx*scale, maxy*scale, maxx*scale, maxy*scale)
     end
   end
 end
