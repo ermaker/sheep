@@ -102,6 +102,8 @@ module Algorithms
       alpha = 4*Math.sqrt(sheep.area/value)
       n = ((sheep.maxy-sheep.miny)/alpha).floor
       m = ((sheep.maxx-sheep.minx)/alpha).floor
+      n = 1 if n < 1
+      m = 1 if m < 1
       [n,m]
     end
   end
