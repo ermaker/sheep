@@ -7,7 +7,7 @@ class Sheep
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
   class NUMBEROF_POINTS_NOT_MATCHED < Exception; end
 
-  attr_accessor :minx, :miny, :maxx, :maxy
+  attr_accessor :minx, :miny, :maxx, :maxy, :area
 
   attr_reader :objects
   def objects= value
@@ -17,10 +17,7 @@ class Sheep
     @miny = points.map{|v|v[1]}.min
     @maxx = points.map{|v|v[0]}.max
     @maxy = points.map{|v|v[1]}.max
-  end
-
-  def area
-    (@maxx-@minx)*(@maxy-@miny)
+    @area = (@maxx-@minx)*(@maxy-@miny) if @maxx and @minx and @maxy and @miny
   end
 
   def load filename
