@@ -52,7 +52,7 @@ class CLI
       farm.sheep = Sheep.new
       farm.sheep.load map
       $logger.debug('CLI.make_hist') {'set_algorithm'}
-      farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024*1024
+      farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024
       $logger.debug('CLI.make_hist') {'data'}
       farm.data io
       $logger.debug('CLI.make_hist') {'file write'}
