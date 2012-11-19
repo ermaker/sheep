@@ -19,6 +19,10 @@ class Sheep
     @maxy = points.map{|v|v[1]}.max
   end
 
+  def area
+    (@maxx-@minx)*(@maxy-@miny)
+  end
+
   def load filename
     open(filename) do |file|
       numberof_objects = file.readline.to_i
