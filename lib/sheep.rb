@@ -49,7 +49,7 @@ class Sheep
 
   def _capture gc, scale, pbar
     gc.stroke('#000000')
-    gc.stroke_width(scale/5000)
+    gc.stroke_width(2)
     gc.fill('transparent')
 
     @objects.each do |object|

@@ -352,7 +352,7 @@ module Algorithms
     def _capture gc, scale, pbar
       sheep._capture gc, scale, pbar
       gc.stroke('#001aff')
-      gc.stroke_width(scale/10000)
+      gc.stroke_width(1)
 
       (minx..maxx).step((maxx-minx)/stepy).each do |x|
         gc.line(x*scale, miny*scale, x*scale, maxy*scale)
@@ -365,7 +365,7 @@ module Algorithms
       end
 
       gc.stroke('#001aff')
-      gc.stroke_width(scale/5000)
+      gc.stroke_width(2)
       gc.line(minx*scale, miny*scale, minx*scale, maxy*scale)
       gc.line(maxx*scale, miny*scale, maxx*scale, maxy*scale)
       gc.line(minx*scale, miny*scale, maxx*scale, miny*scale)
