@@ -1,5 +1,6 @@
 require 'log_config'
 require 'progressbar'
+require 'capturable'
 
 module Algorithms
   class Histogram
@@ -338,26 +339,14 @@ module Algorithms
       result
     end
 
-    def capture_size
-      (stepx+1) * (stepy+1)
+    include Capturable
+
+    def capture_points
+      sheep.objects.flatten(1)
     end
 
-    def capture filename
-      scale = 10000
-      margin = 200
-
-      points = sheep.objects.flatten(1)
-      minmax = [points.map{|v|v[0]}.minmax, points.map{|v|v[1]}.minmax]
-      size = minmax.map{|v| v[1]}
-
-      canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
-      pbar = ProgressBar.new('Draw objects', sheep.capture_size + capture_size)
-      gc = Magick::Draw.new
-      _capture gc, scale, pbar
-      pbar.finish
-      gc.draw(canvas)
-      canvas.flip!
-      canvas.write(filename)
+    def capture_size
+      sheep.capture_size + (stepx+1) * (stepy+1)
     end
 
     def _capture gc, scale, pbar

@@ -19,21 +19,19 @@ describe Algorithms::Multi do
 
   context '#query' do
     it 'works' do
-      pending
-      subject.query(0.0, 0.0, 6.0, 8.0).should == nil
-      subject.query(4.0, 2.0, 5.0, 3.0).should == nil
-      subject.query(3.0, 5.0, 4.0, 6.0).should == nil
-      subject.query(3.0, 4.0, 5.0, 6.0).should == nil
-      subject.query(4.0, 4.0, 5.0, 5.0).should == nil
-      subject.query(3.0, 2.0, 5.0, 6.0).should == nil
+      subject.query(0.0, 0.0, 6.0, 8.0).should == 5130.0
+      subject.query(4.0, 2.0, 5.0, 3.0).should == 5130.0
+      subject.query(3.0, 5.0, 4.0, 6.0).should == 5130.0
+      subject.query(3.0, 4.0, 5.0, 6.0).should == 5130.0
+      subject.query(4.0, 4.0, 5.0, 5.0).should == 5130.0
+      subject.query(3.0, 2.0, 5.0, 6.0).should == 5130.0
     end
 
     it 'works with special cases' do
-      pending
-      subject.query(-100.0, -100.0, 100.0, 100.0).should == nil
-      subject.query(-100.0, -100.0, -50.0, -50.0).should == nil
-      subject.query(3.0, -10.0, 10.0, 50.0).should == nil
-      subject.query(7.0, 9.0, 9.0, 11.0).should == nil
+      subject.query(-100.0, -100.0, 100.0, 100.0).should == 5130.0
+      subject.query(-100.0, -100.0, -50.0, -50.0).should == 5132.0
+      subject.query(3.0, -10.0, 10.0, 50.0).should == 5130.0
+      subject.query(7.0, 9.0, 9.0, 11.0).should == 5130.0
     end
   end
 end

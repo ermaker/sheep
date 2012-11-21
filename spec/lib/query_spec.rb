@@ -20,7 +20,7 @@ describe Query do
         query[3].should <= sheep.maxy
         query[0].should < query[2]
         query[1].should < query[3]
-        ((query[2]-query[0]) * (query[3]-query[1])).should be_within(0.00000001).of((sheep.maxx-sheep.minx)*(sheep.maxy-sheep.miny)*area)
+        ((query[2]-query[0]) * (query[3]-query[1])).should be_within(0.000001).of((sheep.maxx-sheep.minx)*(sheep.maxy-sheep.miny)*area)
       end
     end
   end

@@ -2,6 +2,7 @@ require 'RMagick'
 require 'progressbar'
 require 'geometry'
 require 'ext/geometry'
+require 'capturable'
 
 class Sheep
   class NUMBEROF_OBJECTS_NOT_MATCHED < Exception; end
@@ -36,26 +37,14 @@ class Sheep
     end
   end
 
-  def capture_size
-    @objects.size
+  include Capturable
+
+  def capture_points
+    @objects.flatten(1)
   end
 
-  def capture filename
-    scale = 10000
-    margin = 200
-
-    points = @objects.flatten(1)
-    minmax = [points.map{|v|v[0]}.minmax, points.map{|v|v[1]}.minmax]
-    size = minmax.map{|v| v[1]}
-
-    canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
-    pbar = ProgressBar.new('Draw objects', capture_size)
-    gc = Magick::Draw.new
-    _capture gc, scale, pbar
-    pbar.finish
-    gc.draw(canvas)
-    canvas.flip!
-    canvas.write(filename)
+  def capture_size
+    @objects.size
   end
 
   def _capture gc, scale, pbar

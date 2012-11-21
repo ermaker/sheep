@@ -4,6 +4,10 @@ class Farm
   class INVALID_FORMAT < Exception; end
 
   class << self
+    def scale
+      10000
+    end
+
     def convert source, destination, io=STDERR
       File.open(source, 'rt') do |input|
         File.open(destination, 'w') do |output|
@@ -16,7 +20,7 @@ class Farm
               raise INVALID_FORMAT unless input.readline =~ /^numVertices=(\d+)$/
               output.print "#{$1.to_i-1} "
               output.puts((1..$1.to_i).map do |idx|
-                input.readline.split.map(&:to_f)
+                input.readline.split.map(&:to_f).map{|v|v*scale}
               end[0..-2].flatten.join(' '))
               pbar.inc
             end

@@ -3,10 +3,10 @@ sheep:
 algorithm_class: !ruby/class 'Algorithms::Histogram'
 algorithm: !ruby/object:Algorithms::Histogram
   sheep: 
-  minx: 1.0
-  miny: 1.0
-  maxx: 4.0
-  maxy: 4.0
+  minx: 10000.0
+  miny: 10000.0
+  maxx: 40000.0
+  maxy: 40000.0
   stepx: 31
   stepy: 31
   data:

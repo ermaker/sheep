@@ -1,4 +1,5 @@
 require 'progressbar'
+require 'capturable'
 
 module Algorithms
   module Histograms
@@ -27,22 +28,14 @@ module Algorithms
       end.inject(0.0, :+)
     end
 
-    def capture filename
-      scale = 10000
-      margin = 200
+    include Capturable
 
-      points = @histograms.map(&:sheep).map(&:objects).flatten(2)
-      minmax = [points.map{|v|v[0]}.minmax, points.map{|v|v[1]}.minmax]
-      size = minmax.map{|v| v[1]}
+    def capture_points
+      @histograms.map(&:sheep).map(&:objects).flatten(2)
+    end
 
-      canvas = Magick::Image.new(*size.map{|v|v*scale+margin})
-      pbar = ProgressBar.new('Draw objects', @histograms.map(&:capture_size).inject(0,:+))
-      gc = Magick::Draw.new
-      _capture gc, scale, pbar
-      pbar.finish
-      gc.draw(canvas)
-      canvas.flip!
-      canvas.write(filename)
+    def capture_size
+      @histograms.map(&:capture_size).inject(0,:+)
     end
 
     def _capture gc, scale, pbar

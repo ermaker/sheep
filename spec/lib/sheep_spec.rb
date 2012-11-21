@@ -22,14 +22,14 @@ describe Sheep do
       map = fixture('3.map')
       subject.load map
       subject.objects.should == [
-        [[1.0,1.0],[2.0,1.0],[2.0,2.0],[1.0,2.0]],
-        [[3.0,3.0],[4.0,3.0],[4.0,4.0],[3.0,4.0]],
+        [[10000.0,10000.0],[20000.0,10000.0],[20000.0,20000.0],[10000.0,20000.0]],
+        [[30000.0,30000.0],[40000.0,30000.0],[40000.0,40000.0],[30000.0,40000.0]],
       ]
 
-      subject.minx.should == 1.0
-      subject.miny.should == 1.0
-      subject.maxx.should == 4.0
-      subject.maxy.should == 4.0
+      subject.minx.should == 10000.0
+      subject.miny.should == 10000.0
+      subject.maxx.should == 40000.0
+      subject.maxy.should == 40000.0
     end
     it 'raises an error with _1.map' do
       expect do
