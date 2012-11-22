@@ -89,8 +89,12 @@ module Algorithms
 
     def exact_query minx, miny, maxx, maxy
       return 0 if maxx <= 0 or maxy <= 0
-      return (@data[minx*2..(maxx-1)*2]||[]).
-        map{|line|(line[miny*2..(maxy-1)*2]||[]).inject(0,:+)}.inject(0,:+)
+      return 0 if minx >= maxx or miny >= maxy
+      result = @data[(maxx-1)*2][(maxy-1)*2]
+      result -= @data[minx*2-1][(maxy-1)*2] if minx > 0
+      result -= @data[(maxx-1)*2][miny*2-1] if miny > 0
+      result += @data[minx*2-1][miny*2-1] if minx > 0 and miny > 0
+      return result
     end
 
     def area minx_, miny_, maxx_, maxy_
@@ -326,6 +330,17 @@ module Algorithms
       result
     end
 
+    def _sum result
+      result.map! do |line|
+        s = 0
+        line.map!{|v| s+=v}
+      end
+    end
+
+    def sum result
+      result.replace(_sum(_sum(result).transpose).transpose)
+    end
+
     def histogram pbar
       $logger.debug('Algorithms::Histogram#histogram') {'start'}
       $logger.debug('Algorithms::Histogram#histogram') {'get_result'}
@@ -364,6 +379,10 @@ module Algorithms
 
         pbar.inc
       end
+
+      $logger.debug('Algorithms::Histogram#histogram') {'sum'}
+      sum result
+
       $logger.debug('Algorithms::Histogram#histogram') {'end'}
       result
     end
