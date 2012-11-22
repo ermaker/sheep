@@ -236,7 +236,13 @@ class CLI
 #{filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_)}: #{filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_))} #{filename_sel(filename_query(filename_map(data_), number_, area_, dist_))}
 \t$(SHEEP) 'CLI.make_err "#{filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_))}", :#{measure_}'
 
-                  EOS
+                    EOS
+                    all_files << filename_avg(filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_))
+                    output.puts <<-EOS
+#{filename_avg(filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_))}: #{filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_)}
+\t$(SHEEP) 'CLI.make_avg "#{filename_err(filename_est(filename_hist(filename_map(data_), memory_, method_), filename_query(filename_map(data_), number_, area_, dist_)), measure_)}"'
+
+                    EOS
                   end
                 end
               end
