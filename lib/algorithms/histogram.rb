@@ -300,8 +300,26 @@ module Algorithms
     end
 
     def step5 result, step4, uidx
+      $logger.debug('Algorithms::Histogram#step5') do
+        'result size: %d, %d' % [result.size, result[0].size]
+      end
+      $logger.debug('Algorithms::Histogram#step5') do
+        'uidx: %s' % uidx.to_s
+      end
+      $logger.debug('Algorithms::Histogram#step5') do
+        'step4 size: %d, %d' % [step4.size, step4[0].size]
+      end
       ((uidx[2]-uidx[0])*2-1).times do |idxx|
         ((uidx[3]-uidx[1])*2-1).times do |idxy|
+          $logger.debug('Algorithms::Histogram#step5') do
+            'idxx: %d, idxy: %d' % [idxx, idxy]
+          end
+          $logger.debug('Algorithms::Histogram#step5') do
+            'result: %s' % result[uidx[0]*2 + idxx][uidx[1]*2 + idxy]
+          end
+          $logger.debug('Algorithms::Histogram#step5') do
+            'step4: %s' % step4[idxx][idxy]
+          end
           result[uidx[0]*2 + idxx][uidx[1]*2 + idxy] += step4[idxx][idxy]
         end
       end
@@ -325,22 +343,24 @@ module Algorithms
           'uidx: %s' % uidx.to_s
         end
 
-        $logger.debug('Algorithms::Histogram#histogram') {'step0'}
-        local = step0 uidx
-        $logger.debug('Algorithms::Histogram#histogram') do
-          'local: %s' % local.to_s
-        end
+        if uidx[0] != uidx[2] and uidx[1] != uidx[3]
+          $logger.debug('Algorithms::Histogram#histogram') {'step0'}
+          local = step0 uidx
+          $logger.debug('Algorithms::Histogram#histogram') do
+            'local: %s' % local.to_s
+          end
 
-        $logger.debug('Algorithms::Histogram#histogram') {'step1'}
-        step1 local, uidx, polygon
-        $logger.debug('Algorithms::Histogram#histogram') {'step2'}
-        step2 local, uidx, polygon
-        $logger.debug('Algorithms::Histogram#histogram') {'step3'}
-        step3 local, uidx, polygon
-        $logger.debug('Algorithms::Histogram#histogram') {'step4'}
-        step4 local, uidx, polygon
-        $logger.debug('Algorithms::Histogram#histogram') {'step5'}
-        step5 result, local, uidx
+          $logger.debug('Algorithms::Histogram#histogram') {'step1'}
+          step1 local, uidx, polygon
+          $logger.debug('Algorithms::Histogram#histogram') {'step2'}
+          step2 local, uidx, polygon
+          $logger.debug('Algorithms::Histogram#histogram') {'step3'}
+          step3 local, uidx, polygon
+          $logger.debug('Algorithms::Histogram#histogram') {'step4'}
+          step4 local, uidx, polygon
+          $logger.debug('Algorithms::Histogram#histogram') {'step5'}
+          step5 result, local, uidx
+        end
 
         pbar.inc
       end
