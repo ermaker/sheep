@@ -88,7 +88,8 @@ module Algorithms
     end
 
     def exact_query minx, miny, maxx, maxy
-      (@data[minx*2..(maxx-1)*2]||[]).
+      return 0 if maxx <= 0 or maxy <= 0
+      return (@data[minx*2..(maxx-1)*2]||[]).
         map{|line|(line[miny*2..(maxy-1)*2]||[]).inject(0,:+)}.inject(0,:+)
     end
 
@@ -105,11 +106,19 @@ module Algorithms
       qmaxx = @maxx if qmaxx > @maxx
       qmaxy = @maxy if qmaxy > @maxy
       lidx, uidx, lbound, ubound = bounds(qminx, qminy, qmaxx, qmaxy)
+      $logger.debug('Algorithms::Histogram#query') { 'lidx: %s, uidx: %s' %
+        [lidx.to_s, uidx.to_s] }
       lower = exact_query(*lidx)
       upper = exact_query(*uidx)
+      $logger.debug('Algorithms::Histogram#query') do
+        'lower: %s, upper: %s' % [lower.to_s, upper.to_s]
+      end
       l_a = area(*lbound)
       u_a = area(*ubound)
       q_a = area(qminx, qminy, qmaxx, qmaxy)
+      $logger.debug('Algorithms::Histogram#query') do
+        'l_a: %s, u_a: %s, q_a: %s' % [l_a.to_s, u_a.to_s, q_a.to_s]
+      end
       return exact_query(*uidx) if lidx == uidx
       return 0.0 if u_a == 0.0 and l_a == 0.0
       raise if u_a == l_a
