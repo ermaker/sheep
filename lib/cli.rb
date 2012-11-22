@@ -146,6 +146,18 @@ class CLI
       end
     end
 
+    def filename_avg err
+      err + '.avg'
+    end
+
+    def make_avg err
+      err_values = YAML.load(File.read(err))
+      avg = err_values.inject(:+) / err_values.size
+      File.open(filename_avg(err), 'w') do |f|
+        f << avg
+      end
+    end
+
     def make_makefile data, number, memory, method, area, dist, measure
       output = StringIO.new
       all_files = []

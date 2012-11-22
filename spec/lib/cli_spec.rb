@@ -110,6 +110,18 @@ describe CLI do
     end
   end
 
+  context '.make_avg' do
+    it 'works' do
+      result = StringIO.new
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random_relative.err'), 'rt').and_yield(
+        StringIO.new(File.read(fixture('3_16_histogram_10_0.01_random_relative.err'))))
+      File.stub(:open).with(fixture('3_16_histogram_10_0.01_random_relative.err.avg'), 'w').and_yield(result)
+      described_class.make_avg fixture('3_16_histogram_10_0.01_random_relative.err')
+      result.string.should ==
+        File.read(fixture('3_16_histogram_10_0.01_random_relative.err.avg'))
+    end
+  end
+
   context '.make_makefile' do
     it 'works' do
       result = StringIO.new
