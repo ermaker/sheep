@@ -390,17 +390,20 @@ module Algorithms
     include Capturable
 
     def capture_points
-      sheep.objects.flatten(1)
+      return [] unless sheep
+      return sheep.objects.flatten(1)
     end
 
     def capture_size
-      sheep.capture_size + (stepx+1) * (stepy+1)
+      result = (stepx+1) * (stepy+1)
+      result += sheep.capture_size if sheep
+      return result
     end
 
     def _capture gc, scale, pbar
-      sheep._capture gc, scale, pbar
+      sheep._capture gc, scale, pbar if sheep
       gc.stroke('#001aff')
-      gc.stroke_width(1)
+      gc.stroke_width(3)
 
       (minx..maxx).step((maxx-minx)/stepy).each do |x|
         gc.line(x*scale, miny*scale, x*scale, maxy*scale)
@@ -413,7 +416,7 @@ module Algorithms
       end
 
       gc.stroke('#001aff')
-      gc.stroke_width(2)
+      gc.stroke_width(6)
       gc.line(minx*scale, miny*scale, minx*scale, maxy*scale)
       gc.line(maxx*scale, miny*scale, maxx*scale, maxy*scale)
       gc.line(minx*scale, miny*scale, maxx*scale, miny*scale)

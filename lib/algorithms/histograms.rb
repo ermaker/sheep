@@ -31,7 +31,7 @@ module Algorithms
     include Capturable
 
     def capture_points
-      @histograms.map(&:sheep).map(&:objects).flatten(2)
+      @histograms.map(&:capture_points).flatten(1)
     end
 
     def capture_size
