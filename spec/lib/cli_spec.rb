@@ -3,6 +3,16 @@ require 'cli'
 require 'stringio'
 
 describe CLI do
+  context '.make_data' do
+    it 'works' do
+      srand 0
+      result = StringIO.new
+      File.stub(:open).with(fixture('map100.map'), 'w').and_yield(result)
+      described_class.make_data fixture('map100.map'), 100
+      result.string.should == File.read(fixture('map100.map'))
+    end
+  end
+
   context '.make_map' do
     it 'works' do
       result = StringIO.new

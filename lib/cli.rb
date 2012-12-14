@@ -2,6 +2,7 @@ require 'log_config'
 require 'farm'
 require 'sheep'
 require 'query'
+require 'data'
 require 'algorithms/naive_with_kdtree'
 require 'algorithms/histogram'
 require 'algorithms/simple'
@@ -11,6 +12,10 @@ require 'stringio'
 
 class CLI
   class << self
+    def make_data filename, data
+      Data.generate filename, data
+    end
+
     def filename_map data
       File.join(
         File.dirname(data),
