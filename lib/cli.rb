@@ -9,6 +9,7 @@ require 'algorithms/simple'
 require 'algorithms/multi'
 require 'yaml'
 require 'stringio'
+require 'fileutils'
 
 class CLI
   class << self
@@ -57,7 +58,13 @@ class CLI
       farm.sheep = Sheep.new
       farm.sheep.load map
       $logger.info('CLI.make_hist') {'set_algorithm'}
-      farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024
+      begin
+        farm.set_algorithm Algorithms.const_get(method.capitalize), memory*1024
+      rescue NameError
+        $logger.info('CLI.make_hist') {'do fake'}
+        File.open(filename_hist(map, memory, method), 'w') {|f| }
+        return
+      end
       $logger.info('CLI.make_hist') {'data'}
       farm.data io
       $logger.info('CLI.make_hist') {'remove sheeps'}
@@ -113,6 +120,11 @@ class CLI
       $logger.info('CLI.make_est') {'start'}
       $logger.info('CLI.make_est') {'load farm'}
       farm = YAML.load(File.read(hist))
+      unless farm
+        $logger.info('CLI.make_hist') {'do fake'}
+        FileUtils.touch filename_est(hist, query)
+        return
+      end
       pbar = ProgressBar.new('Get result', Query.size(query), io)
       $logger.info('CLI.make_est') {'each query'}
       est = Query.load(query) do |query|
